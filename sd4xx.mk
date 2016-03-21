@@ -335,11 +335,16 @@ PRODUCT_COPY_FILES += \
 
 # Whitelisted app
 PRODUCT_COPY_FILES += \
-    $(VENDOR_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
+    $(COMMON_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
 
 # Privileged app
 PRODUCT_COPY_FILES += \
-    $(VENDOR_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+    $(COMMON_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+
+# Seccomp policy
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/seccomp/mediacodec-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
+    $(COMMON_PATH)/seccomp/mediaextractor-seccomp.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediaextractor.policy
 
 # Get non-open-source specific aspects
 $(call inherit-product-if-exists, vendor/lge/sd4xx-common/sd4xx-common-vendor.mk)
