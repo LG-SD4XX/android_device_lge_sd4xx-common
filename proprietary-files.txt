@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Blur - from santoni (Redmi 4X)
 vendor/lib64/libuiblur.so
 
@@ -382,3 +383,7 @@ vendor/lib/mediadrm/libwvdrmengine.so|70419ce1f8eb6bd3aa36234f8d7e8003569efc9c
 
 # Wi-Fi - from santoni (Redmi 4X)
 bin/wcnss_service
+=======
+# Perf
+vendor/etc/msm_irqbalance.conf
+>>>>>>> 4de3706... land: Add initial product makefiles and dependencies
