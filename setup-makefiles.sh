@@ -1,10 +1,6 @@
 #!/bin/bash
 #
-<<<<<<< HEAD
 # Copyright (C) 2017 The LineageOS Project
-=======
-# Copyright (C) 2016 The CyanogenMod Project
->>>>>>> baba6e0... land: Add proprietary file extraction scripts
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,13 +17,7 @@
 
 set -e
 
-<<<<<<< HEAD
 export INITIAL_COPYRIGHT_YEAR=2017
-=======
-# Required!
-DEVICE=land
-VENDOR=xiaomi
->>>>>>> baba6e0... land: Add proprietary file extraction scripts
 
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
@@ -42,7 +32,6 @@ if [ ! -f "$HELPER" ]; then
 fi
 . "$HELPER"
 
-<<<<<<< HEAD
 # Initialize the helper for common
 setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" "true" "$1"
 
@@ -50,20 +39,10 @@ setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" "true" "$1"
 write_headers "lv517 ph2n sf340n cv1"
 
 # The standard common blobs
-=======
-# Initialize the helper
-setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
-
-# Copyright headers and guards
-write_headers
-
-# The standard blobs
->>>>>>> baba6e0... land: Add proprietary file extraction scripts
 write_makefiles "$MY_DIR"/proprietary-files.txt
 
 # We are done!
 write_footers
-<<<<<<< HEAD
 
 if [ ! -z $VARIANT_COPYRIGHT_YEAR ]; then
     export INITIAL_COPYRIGHT_YEAR=$VARIANT_COPYRIGHT_YEAR
@@ -85,5 +64,3 @@ if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
     # We are done!
     write_footers
 fi
-=======
->>>>>>> baba6e0... land: Add proprietary file extraction scripts

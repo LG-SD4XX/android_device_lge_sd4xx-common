@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 #!/vendor/bin/sh
 # Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+=======
+#!/system/bin/sh
+# Copyright (c) 2012, The Linux Foundation. All rights reserved.
+>>>>>>> dc1dc77... land: rootdir: Build the init scripts
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -93,6 +98,7 @@ fi
 
 target=`getprop ro.board.platform`
 
+<<<<<<< HEAD
 # soc_ids for 8937
 if [ -f /sys/devices/soc0/soc_id ]; then
 	soc_id=`cat /sys/devices/soc0/soc_id`
@@ -100,20 +106,36 @@ else
 	soc_id=`cat /sys/devices/system/soc/soc0/id`
 fi
 
+=======
+>>>>>>> dc1dc77... land: rootdir: Build the init scripts
 #
 # Allow USB enumeration with default PID/VID
 #
 baseband=`getprop ro.baseband`
+<<<<<<< HEAD
 
+=======
+>>>>>>> dc1dc77... land: rootdir: Build the init scripts
 echo 1  > /sys/class/android_usb/f_mass_storage/lun/nofua
 usb_config=`getprop persist.sys.usb.config`
 case "$usb_config" in
     "" | "adb") #USB persist config not set, select default configuration
       case "$esoc_link" in
+<<<<<<< HEAD
+=======
+          "HSIC")
+              setprop persist.sys.usb.config diag,diag_mdm,serial_hsic,serial_tty,rmnet_hsic,mass_storage,adb
+              setprop persist.rmnet.mux enabled
+          ;;
+          "HSIC+PCIe")
+              setprop persist.sys.usb.config diag,diag_mdm,serial_hsic,rmnet_qti_ether,mass_storage,adb
+          ;;
+>>>>>>> dc1dc77... land: rootdir: Build the init scripts
           "PCIe")
               setprop persist.sys.usb.config diag,diag_mdm,serial_cdev,rmnet_qti_ether,mass_storage,adb
           ;;
           *)
+<<<<<<< HEAD
 	  case "$baseband" in
 	      "apq")
 	          setprop persist.sys.usb.config diag,adb
@@ -190,6 +212,62 @@ if [ -d /config/usb_gadget ]; then
 	setprop sys.usb.configfs 1
 fi
 
+=======
+          case "$baseband" in
+              "mdm")
+                   setprop persist.sys.usb.config diag,diag_mdm,serial_hsic,serial_tty,rmnet_hsic,mass_storage,adb
+              ;;
+              "mdm2")
+                   setprop persist.sys.usb.config diag,diag_mdm,serial_hsic,serial_tty,rmnet_hsic,mass_storage,adb
+              ;;
+              "sglte")
+                   setprop persist.sys.usb.config diag,diag_qsc,serial_smd,serial_tty,serial_hsuart,rmnet_hsuart,mass_storage,adb
+              ;;
+              "dsda" | "sglte2")
+                   setprop persist.sys.usb.config diag,diag_mdm,diag_qsc,serial_hsic,serial_hsuart,rmnet_hsic,rmnet_hsuart,mass_storage,adb
+              ;;
+              "dsda2")
+                   setprop persist.sys.usb.config diag,diag_mdm,diag_mdm2,serial_hsic,serial_hsusb,rmnet_hsic,rmnet_hsusb,mass_storage,adb
+              ;;
+              *)
+		case "$target" in
+                        "msm8916")
+                            setprop persist.sys.usb.config diag,serial_smd,rmnet_bam,adb
+                        ;;
+                        "msm8994" | "msm8992")
+                            if [ "$soc_hwplatform" == "Dragon" ]; then
+                               setprop persist.sys.usb.config diag,adb
+                            else
+                               setprop persist.sys.usb.config diag,serial_smd,serial_tty,rmnet_ipa,mass_storage,adb
+                            fi
+                        ;;
+			"msm8996")
+			    if [ "$soc_revision" == "1.0" -o "$soc_hwplatform" == "Dragon" ]
+			    then
+                               setprop persist.sys.usb.config diag,adb
+			    else
+			       setprop persist.sys.usb.config diag,serial_cdev,serial_tty,rmnet_ipa,mass_storage,adb
+			    fi
+			;;
+                        "msm8909" | "msm8937")
+                            setprop persist.sys.usb.config diag,serial_smd,rmnet_qti_bam,adb
+                        ;;
+                        "msm8952" | "msm8953")
+                            setprop persist.sys.usb.config diag,serial_smd,rmnet_ipa,adb
+                        ;;
+                        *)
+                            setprop persist.sys.usb.config diag,adb
+                        ;;
+                    esac
+              ;;
+          esac
+          ;;
+      esac
+    ;;
+    * ) ;; #USB persist config exists, do nothing
+esac
+
+>>>>>>> dc1dc77... land: rootdir: Build the init scripts
 #
 # Do target specific things
 #
@@ -215,6 +293,7 @@ case "$target" in
         echo 131072 > /sys/module/g_android/parameters/mtp_tx_req_len
         echo 131072 > /sys/module/g_android/parameters/mtp_rx_req_len
     ;;
+<<<<<<< HEAD
     "msm8937")
 	case "$soc_id" in
 		"313" | "320")
@@ -222,6 +301,8 @@ case "$target" in
 		;;
 	esac
    ;;
+=======
+>>>>>>> dc1dc77... land: rootdir: Build the init scripts
 esac
 
 #

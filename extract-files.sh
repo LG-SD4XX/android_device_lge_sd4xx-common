@@ -1,10 +1,6 @@
 #!/bin/bash
 #
-<<<<<<< HEAD
 # Copyright (C) 2017 The LineageOS Project
-=======
-# Copyright (C) 2016 The CyanogenMod Project
->>>>>>> baba6e0... land: Add proprietary file extraction scripts
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,12 +17,6 @@
 
 set -e
 
-<<<<<<< HEAD
-=======
-DEVICE=land
-VENDOR=xiaomi
-
->>>>>>> baba6e0... land: Add proprietary file extraction scripts
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
@@ -40,7 +30,6 @@ if [ ! -f "$HELPER" ]; then
 fi
 . "$HELPER"
 
-<<<<<<< HEAD
 while getopts ":nhsd:" options
 do
   case $options in
@@ -57,8 +46,6 @@ do
   esac
 done
 
-=======
->>>>>>> baba6e0... land: Add proprietary file extraction scripts
 if [ $# -eq 0 ]; then
   SRC=adb
 else
@@ -75,7 +62,6 @@ else
   fi
 fi
 
-<<<<<<< HEAD
 if [ -n "$SETUP" ]; then
     # Initialize the helper for common
     setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" true false
@@ -103,11 +89,3 @@ else
 
     "$MY_DIR"/setup-makefiles.sh "$CLEANUP"
 fi
-=======
-# Initialize the helper
-setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
-
-extract "$MY_DIR"/proprietary-files.txt "$SRC"
-
-"$MY_DIR"/setup-makefiles.sh
->>>>>>> baba6e0... land: Add proprietary file extraction scripts
