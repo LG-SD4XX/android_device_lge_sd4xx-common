@@ -250,6 +250,10 @@ PRODUCT_PACKAGES += \
     p2p_supplicant_overlay.conf \
     hostapd_default.conf
 
+# Wi-Fi HIDL
+PRODUCT_PACKAGES += \
+    android.hardware.wifi@1.0-service
+
 # WCNSS
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/wifi/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
