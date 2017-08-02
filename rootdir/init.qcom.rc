@@ -518,6 +518,8 @@ service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
 service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
+    group system wakelock
+    shutdown critical
 
 service rfs_access /system/bin/rfs_access
    class core
