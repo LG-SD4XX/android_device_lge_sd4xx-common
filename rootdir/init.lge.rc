@@ -124,12 +124,6 @@ service bt-sap /system/bin/sapd 15
    disabled
    oneshot
 
-# fingerprintd
-service fingerprintd /system/bin/fingerprintd
-    class late_start
-    user system
-    group system input
-
 # fidod
 service fidod /system/bin/fidod
     class late_start
