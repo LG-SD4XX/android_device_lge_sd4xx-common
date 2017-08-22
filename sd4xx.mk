@@ -175,6 +175,10 @@ PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     lights.msm8937
 
+# Keymaster HAL
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@3.0-impl
+
 # Misc
 PRODUCT_PACKAGES += \
     libcurl
