@@ -100,6 +100,10 @@ PRODUCT_PACKAGES += \
     memtrack.msm8937 \
     liboverlay
 
+# RenderScript HAL
+PRODUCT_PACKAGES += \
+    android.hardware.renderscript@1.0-impl
+
 # Data
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/data/dsi_config.xml:system/etc/data/dsi_config.xml \
