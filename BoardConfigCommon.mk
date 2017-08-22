@@ -189,9 +189,6 @@ BOARD_USES_QC_TIME_SERVICES := true
 # RIL
 TARGET_RIL_VARIANT := caf
 
-# Sensors
-USE_SENSOR_MULTI_HAL := true
-
 # System prop
 TARGET_SYSTEM_PROP := $(COMMON_PATH)/system.prop
 
