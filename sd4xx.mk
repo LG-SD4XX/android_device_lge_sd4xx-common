@@ -186,7 +186,6 @@ PRODUCT_PACKAGES += \
     init.baseband.sh \
     init.class_main.sh \
     init.lge.rc \
-    init.qcom.bt.sh \
     init.qcom.early_boot.sh \
     init.qcom.power.rc \
     init.qcom.rc \
