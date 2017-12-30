@@ -184,9 +184,6 @@ TARGET_USES_MEDIA_EXTENSIONS := true
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
 
-# Power
-TARGET_POWERHAL_VARIANT := qcom
-
 # Qualcomm
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QC_TIME_SERVICES := true
