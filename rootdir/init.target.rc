@@ -143,11 +143,6 @@ service thermal-engine /vendor/bin/thermal-engine
    socket thermal-recv-passive-client stream 0666 system system
    group root
 
-service audiod /system/bin/audiod
-   class late_start
-   user system
-   group system
-
 on boot
     start rmt_storage
     insmod /system/lib/modules/adsprpc.ko
