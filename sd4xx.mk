@@ -318,5 +318,9 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini \
     $(COMMON_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
 
+# Whitelisted app
+PRODUCT_COPY_FILES += \
+    $(VENDOR_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
+
 # Get non-open-source specific aspects
 $(call inherit-product-if-exists, vendor/lge/sd4xx-common/sd4xx-common-vendor.mk)
