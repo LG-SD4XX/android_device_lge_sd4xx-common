@@ -322,5 +322,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(VENDOR_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
 
+# Privileged app
+PRODUCT_COPY_FILES += \
+    $(VENDOR_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+
 # Get non-open-source specific aspects
 $(call inherit-product-if-exists, vendor/lge/sd4xx-common/sd4xx-common-vendor.mk)
