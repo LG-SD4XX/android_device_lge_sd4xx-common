@@ -390,13 +390,6 @@ service perfd /vendor/bin/perfd
    disabled
    socket perfd seqpacket 0666 root system
 
-service iop /vendor/bin/iop
-    class main
-    user root
-    group root
-    disabled
-    socket iop seqpacket 0666 root system
-
 # Removed by LG
 #service qcomsysd /system/bin/qcom-system-daemon
 #    class main
@@ -1041,7 +1034,7 @@ service vm_bms /system/bin/vm_bms
     group root
     disabled
 
-service msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
+service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
     class core
     user root
     group root
