@@ -319,6 +319,7 @@ PRODUCT_PACKAGES += \
     hostapd \
     libwpa_client \
     wificond \
+    wcnss_service \
     wpa_supplicant \
     wpa_supplicant.conf \
     wpa_supplicant_overlay.conf \
