@@ -18,7 +18,7 @@ LOCAL_PATH := device/lge/msm8937-common
 
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
-#FORCE_64_BIT := true
+#FORCE_64_BIT := false
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8937
@@ -69,12 +69,12 @@ TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 else
 TARGET_KERNEL_ARCH := arm
 BOARD_KERNEL_IMAGE_NAME := zImage-dtb
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-4.8/bin
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-linaro-4.8/bin
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 endif
 TARGET_KERNEL_APPEND_DTB := true
-TARGET_KERNEL_CONFIG := lineage_ph2n_mini_defconfig
-TARGET_KERNEL_SOURCE := kernel/lge/msm8937
+TARGET_KERNEL_CONFIG := lineage_lv517_defconfig
+TARGET_KERNEL_SOURCE := kernel/lge/lv517
 
 # Audio
 AUDIO_FEATURE_ENABLED_AAC_ADTS_OFFLOAD := true
@@ -149,7 +149,7 @@ BOARD_CHARGING_CMDLINE_VALUE := "chargerlogo"
 
 # CMHW
 BOARD_USES_CYANOGEN_HARDWARE := true
-#BOARD_HARDWARE_CLASS := device/lge/ph2n/cmhw/
+#BOARD_HARDWARE_CLASS := device/lge/lv517/cmhw/
 
 # CNE
 BOARD_USES_QCNE := true
@@ -215,9 +215,6 @@ TARGET_RIL_VARIANT := caf
 # Sensors
 USE_SENSOR_MULTI_HAL := true
 
-# System prop
-TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
-
 # Keymaster
 TARGET_PROVIDES_KEYMASTER := true
 
@@ -227,10 +224,6 @@ BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
 
 # Tap to wake
 #TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/input/lge_touch/lpwg_notify"
-
-# NFC
-BOARD_NFC_CHIPSET := pn548
-BOARD_NFC_DEVICE := "/dev/pn547"
 
 # Wifi
 BOARD_HAS_QCOM_WLAN := true

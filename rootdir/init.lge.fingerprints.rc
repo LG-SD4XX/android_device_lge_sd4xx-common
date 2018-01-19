@@ -2,7 +2,7 @@ on post-fs-data
 #make factory test result directory
    mkdir /sns/fingerprint 0775 system system
 
-#change cucialtec device permission
+#change goodix_fp device permission
 on boot
    chown system input /sys/devices/virtual/input/lge_fingerprint/testmode
    chown system input /sys/devices/virtual/input/lge_fingerprint/spitest

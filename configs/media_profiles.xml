@@ -100,7 +100,7 @@
 <MediaSettings>
     <!-- Each camcorder profile defines a set of predefined configuration parameters -->
     <!-- Back Camera -->
-    <CamcorderProfiles cameraId="0">
+    <CamcorderProfiles cameraId="0" startOffsetMs="400">
 
         <EncoderProfile quality="qcif" fileFormat="3gp" duration="10">
             <Video codec="h264"
@@ -246,7 +246,7 @@
 
     </CamcorderProfiles>
 
-    <CamcorderProfiles cameraId="1">
+    <CamcorderProfiles cameraId="1" startOffsetMs="800">
 
         <EncoderProfile quality="qcif" fileFormat="3gp" duration="10">
             <Video codec="h264"
