@@ -200,7 +200,7 @@ PRODUCT_PACKAGES += \
 
 # IRSC
 PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/configs/sec_config:system/etc/sec_config
+    $(COMMON_PATH)/configs/sec_config:system/vendor/etc/sec_config
 
 # Lights
 PRODUCT_PACKAGES += \
