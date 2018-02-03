@@ -337,7 +337,7 @@ on post-fs-data
     chmod 0660 /data/misc/radio/copy_complete
 
     # copy prebuilt qcril.db files always
-    copy /system/vendor/qcril.db /data/misc/radio/qcril_prebuilt.db
+    copy /vendor/qcril.db /data/misc/radio/qcril_prebuilt.db
     chown radio radio /data/misc/radio/qcril_prebuilt.db
     chmod 0660 /data/misc/radio/qcril_prebuilt.db
     # File flags for prebuilt ril db file
@@ -365,20 +365,20 @@ on post-fs-data
     write /sys/block/dm-1/queue/read_ahead_kb 2048
 
 # Removed by LG
-#service nqnfcinfo /system/vendor/bin/nqnfcinfo
+#service nqnfcinfo /vendor/bin/nqnfcinfo
 #    class late_start
 #    group nfc
 #    user system
 #    oneshot
 
-service perfd /system/vendor/bin/perfd
+service perfd /vendor/bin/perfd
    class main
    user root
    group root readproc
    disabled
    socket perfd seqpacket 0666 root system
 
-service iop /system/bin/iop
+service iop /vendor/bin/iop
     class main
     user root
     group root
@@ -489,21 +489,21 @@ on property:vold.decrypt=trigger_restart_framework
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
-service cnd /system/bin/cnd
+service cnd /vendor/bin/cnd
     class main
     socket cnd stream 660 root inet
 
-service dpmd /system/bin/dpmd
+service dpmd /vendor/bin/dpmd
     class late_start
     socket dpmd stream 660 root system
     group system readproc
 
-service irsc_util /system/bin/irsc_util "/etc/sec_config"
+service irsc_util /vendor/bin/irsc_util "/etc/sec_config"
     class core
     user root
     oneshot
 
-service rmt_storage /system/bin/rmt_storage
+service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
 
@@ -512,7 +512,7 @@ service rfs_access /system/bin/rfs_access
    user root
    group system net_raw
 
-service tftp_server /system/bin/tftp_server
+service tftp_server /vendor/bin/tftp_server
    class core
    user root
 
@@ -541,7 +541,7 @@ service fmhal_service /system/bin/fmhal_service
     group bluetooth net_bt_admin net_admin
     disabled
 
-service config_bt_addr /system/bin/btnvtool -O
+service config_bt_addr /vendor/bin/btnvtool -O
     class core
     user bluetooth
     group bluetooth radio
@@ -626,7 +626,7 @@ service qmuxd /system/bin/qmuxd
     group radio audio bluetooth gps nfc qcom_diag
     disabled
 
-service netmgrd /system/bin/netmgrd
+service netmgrd /vendor/bin/netmgrd
     class main
     user root
     group root wifi wakelock radio inet
@@ -645,13 +645,13 @@ service ipacm /system/bin/ipacm
     group net_admin inet
 #   disabled
 
-service qti /system/vendor/bin/qti
+service qti /vendor/bin/qti
     class main
     user radio
     group radio net_raw qcom_diag usb net_admin
     disabled
 
-service sensors /system/bin/sensors.qcom
+service sensors /vendor/bin/sensors.qcom
     class core
     user root
     group root
@@ -812,7 +812,7 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service loc_launcher /system/bin/loc_launcher
+service loc_launcher /vendor/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
     group gps inet qcom_diag wifi
@@ -846,7 +846,6 @@ service qcom-sh /system/bin/sh /init.qcom.sh
     user root
     oneshot
 
-<<<<<<< HEAD
 service sensor-sh /system/bin/sh /init.qcom.sensors.sh
     class core
     user root
@@ -913,10 +912,7 @@ service battery_monitor /system/bin/battery_monitor
     group system
     disabled
 
-service ril-daemon2 /system/bin/rild -c 2
-=======
 service ril-daemon2 /vendor/bin/hw/rild -c 2
->>>>>>> a2c9447... msm8937-common: Remove references to hostapd
     class main
     socket rild2 stream 660 root radio
     socket rild-debug2 stream 660 radio system
@@ -1029,7 +1025,7 @@ service vm_bms /system/bin/vm_bms
     group root
     disabled
 
-service msm_irqbalance /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
+service msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
     class core
     user root
     group root
@@ -1050,7 +1046,7 @@ on property:sys.wfdservice=enable
 on property:sys.wfdservice=disable
     stop wfdservice
 
-service RIDL /system/vendor/bin/RIDLClient.exe
+service RIDL /vendor/bin/RIDLClient.exe
     class late_start
     oneshot
     user system
@@ -1059,7 +1055,7 @@ service RIDL /system/vendor/bin/RIDLClient.exe
     # limited to 12 groups.  Unused: audio usb net_bt_admin net_bt_stac net_raw net_admin
 
 # service for USERDEBUG
-service LKCore-dbg /system/vendor/bin/LKCore
+service LKCore-dbg /vendor/bin/LKCore
     class late_start
     oneshot
     disabled
@@ -1067,26 +1063,26 @@ service LKCore-dbg /system/vendor/bin/LKCore
     group root system log qcom_diag net_raw
 
 # service for USER
-service LKCore-rel /system/vendor/bin/LKCore
+service LKCore-rel /vendor/bin/LKCore
     class late_start
     oneshot
     disabled
     user system
     group system log qcom_diag
 
-service qseeproxydaemon /system/vendor/bin/qseeproxydaemon
+service qseeproxydaemon /vendor/bin/qseeproxydaemon
     class late_start
     user system
     group system
 
 # Removed by LG
-#service esepmdaemon /system/vendor/bin/esepmdaemon
+#service esepmdaemon /vendor/bin/esepmdaemon
 #    class core
 #    user system
 #    group nfc
 
 # Seemp health service
-service seemp_healthd /system/vendor/bin/seemp_healthd
+service seemp_healthd /vendor/bin/seemp_healthd
     class late_start
     user system
     group system
@@ -1113,7 +1109,7 @@ service logdumpd /system/bin/logcat -b all -v threadtime -D -w /dev/block/bootde
 on property:ro.logdumpd.enabled=1
     start logdumpd
 
-service time_daemon /system/bin/time_daemon
+service time_daemon /vendor/bin/time_daemon
     class main
     user root
     group root
