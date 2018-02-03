@@ -1071,11 +1071,6 @@ service LKCore-rel /vendor/bin/LKCore
     user system
     group system log qcom_diag
 
-service qseeproxydaemon /vendor/bin/qseeproxydaemon
-    class late_start
-    user system
-    group system
-
 # Removed by LG
 #service esepmdaemon /vendor/bin/esepmdaemon
 #    class core
