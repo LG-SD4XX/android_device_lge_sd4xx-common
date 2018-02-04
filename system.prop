@@ -126,6 +126,11 @@ qcom.hw.aac.encoder=true
 video.disable.ubwc=1
 vidc.disable.split.mode=1
 vidc.enc.narrow.searchrange=1
+drm.service.enabled=true
+vendor.audio.hw.aac.encoder=true
+vendor.vidc.disable.split.mode=1
+vendor.vidc.enc.disable.pq=true
+vendor.vidc.enc.disable_bframes=1
 
 # swap & zram
 ro.config.zram=true
