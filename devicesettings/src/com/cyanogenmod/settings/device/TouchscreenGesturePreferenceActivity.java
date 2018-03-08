@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (c) 2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-#define CAMERA_PARAMETERS_EXTRA_C \
-const char CameraParameters::KEY_NIGHTSHOT_ENABLE[] = "nightshot-enable"; \
-const char CameraParameters::KEY_NIGHTSHOT_ISENABLED[] = "nightshot-isenabled"; \
-const char CameraParameters::KEY_NIGHTHAWK_ENABLE[] = "nighthawk-enable"; \
-\
+package com.cyanogenmod.settings.device;
 
-#define CAMERA_PARAMETERS_EXTRA_H \
-static const char KEY_NIGHTSHOT_ENABLE[]; \
-static const char KEY_NIGHTSHOT_ISENABLED[]; \
-static const char KEY_NIGHTHAWK_ENABLE[]; \
-\
+import android.os.Bundle;
+
+import com.android.settingslib.drawer.SettingsDrawerActivity;
+
+public class TouchscreenGesturePreferenceActivity extends SettingsDrawerActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, new TouchscreenGesturePreferenceFragment())
+                .commit();
+    }
+}

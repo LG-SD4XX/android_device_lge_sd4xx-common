@@ -502,28 +502,16 @@ case "$target" in
                 echo 30 > /sys/devices/system/cpu/cpu1/sched_mostly_idle_load
                 echo 30 > /sys/devices/system/cpu/cpu2/sched_mostly_idle_load
                 echo 30 > /sys/devices/system/cpu/cpu3/sched_mostly_idle_load
-                echo 30 > /sys/devices/system/cpu/cpu4/sched_mostly_idle_load
-                echo 30 > /sys/devices/system/cpu/cpu5/sched_mostly_idle_load
-                echo 30 > /sys/devices/system/cpu/cpu6/sched_mostly_idle_load
-                echo 30 > /sys/devices/system/cpu/cpu7/sched_mostly_idle_load
-
+             
                 echo 3 > /sys/devices/system/cpu/cpu0/sched_mostly_idle_nr_run
                 echo 3 > /sys/devices/system/cpu/cpu1/sched_mostly_idle_nr_run
                 echo 3 > /sys/devices/system/cpu/cpu2/sched_mostly_idle_nr_run
                 echo 3 > /sys/devices/system/cpu/cpu3/sched_mostly_idle_nr_run
-                echo 3 > /sys/devices/system/cpu/cpu4/sched_mostly_idle_nr_run
-                echo 3 > /sys/devices/system/cpu/cpu5/sched_mostly_idle_nr_run
-                echo 3 > /sys/devices/system/cpu/cpu6/sched_mostly_idle_nr_run
-                echo 3 > /sys/devices/system/cpu/cpu7/sched_mostly_idle_nr_run
-
+              
                 echo 0 > /sys/devices/system/cpu/cpu0/sched_prefer_idle
                 echo 0 > /sys/devices/system/cpu/cpu1/sched_prefer_idle
                 echo 0 > /sys/devices/system/cpu/cpu2/sched_prefer_idle
                 echo 0 > /sys/devices/system/cpu/cpu3/sched_prefer_idle
-                echo 0 > /sys/devices/system/cpu/cpu4/sched_prefer_idle
-                echo 0 > /sys/devices/system/cpu/cpu5/sched_prefer_idle
-                echo 0 > /sys/devices/system/cpu/cpu6/sched_prefer_idle
-                echo 0 > /sys/devices/system/cpu/cpu7/sched_prefer_idle
 
                 for devfreq_gov in /sys/class/devfreq/qcom,mincpubw*/governor
                 do
@@ -587,10 +575,6 @@ case "$target" in
                 echo 1 > /sys/devices/system/cpu/cpu1/online
                 echo 1 > /sys/devices/system/cpu/cpu2/online
                 echo 1 > /sys/devices/system/cpu/cpu3/online
-                echo 1 > /sys/devices/system/cpu/cpu4/online
-                echo 1 > /sys/devices/system/cpu/cpu5/online
-                echo 1 > /sys/devices/system/cpu/cpu6/online
-                echo 1 > /sys/devices/system/cpu/cpu7/online
 
                 # Enable low power modes
                 echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled

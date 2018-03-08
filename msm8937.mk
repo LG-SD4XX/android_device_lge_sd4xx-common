@@ -97,8 +97,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/data/netmgr_config.xml:system/etc/data/netmgr_config.xml
 
 # Gesture handler
-#PRODUCT_PACKAGES += \
-#    GestureHandler
+PRODUCT_PACKAGES += \
+    GestureHandler
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -107,14 +107,18 @@ PRODUCT_PACKAGES += \
 # Doze mode
 PRODUCT_PACKAGES += \
     LgeDoze
-
+  
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
     fs_config_files
 
 # Gps
 PRODUCT_PACKAGES += \
-    gps.msm8937
+    gps.msm8937 \
+    libgps.utils \
+    libloc_core \
+    libloc_eng \
+    libgnsspps 
 
 # IMS
 PRODUCT_PACKAGES += \
@@ -129,6 +133,7 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     init.lge.usb.sh \
     init.lge.usb.default.sh \
+    init.lv517_product.rc \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
     init.qcom.class_core.sh \
@@ -140,6 +145,7 @@ PRODUCT_PACKAGES += \
     init.qcom.bt.sh \
     init.target.rc \
     init.baseband.sh \
+    init.wifi.rc \
     ueventd.qcom.rc
 
 # IPA Manager
@@ -170,7 +176,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+    vendor/cm/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -229,7 +236,8 @@ PRODUCT_PACKAGES += \
     p2p_supplicant_overlay.conf \
     hostapd_default.conf \
     hostapd.accept \
-    hostapd.deny
+    hostapd.deny \
+    iwpriv
 
 # WCNSS
 PRODUCT_COPY_FILES += \
