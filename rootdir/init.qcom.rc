@@ -29,10 +29,8 @@
 import init.target.rc
 import init.qcom.usb.rc
 import init.ph2n_core.rc
-import init.qcom.power.rc
 import init.lge.fm.rc
-import init.wifi.rc
-import /init.lge.bt.rc
+import init.lge.bt.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -333,10 +331,7 @@ on post-fs-data
     #Create a folder for SRS to be able to create a usercfg file
     mkdir /data/data/media 0770 media media
 
-    #FM Radio
-    setprop ro.fm.module QCT
-
-    #Create FM Radio dir for patchdownloader
+    #Create FM dir for patchdownloader
     mkdir /data/misc/fm 0770 system system
     chmod 0770 /data/misc/fm
 
@@ -524,54 +519,61 @@ service cnd /system/bin/cnd
     class main
     socket cnd stream 660 root inet
 
+
 service dpmd /system/bin/dpmd
     class late_start
     socket dpmd stream 660 root system
     group system readproc
+
 
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
     class core
     user root
     oneshot
 
-service ims_rtp_daemon /system/bin/ims_rtp_daemon
-   class main
-   user system
-   socket ims_rtpd stream 0660 system radio
-   group radio net_raw diag diag inet log
-   disabled
-
-on property:sys.ims.DATA_DAEMON_STATUS=1
-    start ims_rtp_daemon
-
-service imscmservice /system/bin/imscmservice
+service imsqmidaemon /system/bin/imsqmidaemon
     class main
     user system
-    group radio net_raw diag diag log
+    socket ims_qmid stream 0660 system radio
+    group radio net_raw log diag
     disabled
 
-on property:sys.ims.DATA_DAEMON_STATUS=1
-    start imscmservice
+on property:service.qti.ims.enabled=1
+    start imsqmidaemon
 
 service imsdatadaemon /system/bin/imsdatadaemon
     class main
     user system
     socket ims_datad stream 0660 system radio
     group system wifi radio inet net_raw log diag net_admin
+
     disabled
 
 on property:sys.ims.QMI_DAEMON_STATUS=1
     start imsdatadaemon
 
-service imsqmidaemon /system/bin/imsqmidaemon
+service ims_rtp_daemon /system/bin/ims_rtp_daemon
     class main
     user system
-    socket ims_qmid stream 0660 system radio
-    group radio net_raw log diag
+    socket ims_rtpd stream 0660 system radio
+    group radio net_raw diag diag inet log
+    disabled
+
+service imscmservice /system/bin/imscmservice
+    class main
+    user system
+    group radio net_raw diag diag log
+
+    disabled
+
+on property:sys.ims.DATA_DAEMON_STATUS=1
+    start ims_rtp_daemon
+    start imscmservice
 
 service rmt_storage /system/bin/rmt_storage
     class core
     user root
+
 
 service rfs_access /system/bin/rfs_access
    class core
@@ -581,6 +583,7 @@ service rfs_access /system/bin/rfs_access
 service tftp_server /system/bin/tftp_server
    class core
    user root
+   writepid /dev/cpuset/system-background/tasks
 
 on property:wc_transport.start_hci=true
     start start_hci_filter
@@ -695,31 +698,34 @@ service qmuxd /system/bin/qmuxd
 
 service netmgrd /system/bin/netmgrd
     class main
-    disabled
+    user root
+    group root wifi wakelock radio inet
+
 
 service ipacm-diag /system/bin/ipacm-diag
     class main
     user system
     socket ipacm_log_file dgram 660 system net_admin
     group net_admin qcom_diag
-    disabled
 
 service ipacm /system/bin/ipacm
     class main
     user net_admin
     group net_admin inet
-    disabled
+
 
 service qti /system/vendor/bin/qti
     class main
     user radio
     group radio net_raw qcom_diag usb net_admin
+
     disabled
 
 service sensors /system/bin/sensors.qcom
     class core
     user root
     group root
+
     disabled
 
 on property:ro.use_data_netmgrd=false
@@ -931,6 +937,7 @@ service loc_launcher /system/bin/loc_launcher
     class late_start
     group gps inet qcom_diag wifi
 
+
 ## TODO: Please DO NOT enable the next line when you merge the CAF
 #service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
 #    class late_start
@@ -938,14 +945,6 @@ service loc_launcher /system/bin/loc_launcher
 #    group system
 #    disabled
 #    oneshot
-
-# Enable FM Radio
-service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
-    class late_start
-    user root
-    group system
-    disabled
-    oneshot
 
 on property:crypto.driver.load=1
      insmod /system/lib/modules/qce.ko
@@ -1091,6 +1090,7 @@ service charger /sbin/healthd -c
     critical
     seclabel u:r:healthd:s0
 
+
 service ssr_diag /system/bin/ssr_diag
     class late_start
     user system
@@ -1155,6 +1155,7 @@ service msm_irqbalance /system/bin/msm_irqbalance -f /system/vendor/etc/msm_irqb
     class core
     user root
     group root
+
     disabled
 
 service wfdservice /system/bin/wfdservice
@@ -1222,6 +1223,7 @@ service qseeproxydaemon /system/vendor/bin/qseeproxydaemon
     user system
     group system
 
+
 #service esepmdaemon /system/vendor/bin/esepmdaemon
 #    class core
 #    user system
@@ -1270,7 +1272,7 @@ service poweroffhandler /system/bin/poweroffhandler
 # Logcat dump daemon, dumps logs to logdump partition
 service logdumpd /system/bin/logcat -b all -v threadtime -D -w /dev/block/bootdevice/by-name/logdump
     class core
-    writepid /dev/cpuset/system-background/tasks
+
     seclabel u:r:logdumpd:s0
     disabled
 

@@ -51,9 +51,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
-# System properties
--include $(LOCAL_PATH)/system_prop.mk
-
 # Audio
 PRODUCT_PACKAGES += \
     audiod \
@@ -107,7 +104,7 @@ PRODUCT_PACKAGES += \
 # Doze mode
 PRODUCT_PACKAGES += \
     LgeDoze
-  
+
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
     fs_config_files
@@ -133,7 +130,6 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     init.lge.usb.sh \
     init.lge.usb.default.sh \
-    init.lv517_product.rc \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
     init.qcom.class_core.sh \
@@ -145,7 +141,6 @@ PRODUCT_PACKAGES += \
     init.qcom.bt.sh \
     init.target.rc \
     init.baseband.sh \
-    init.wifi.rc \
     ueventd.qcom.rc
 
 # IPA Manager
@@ -176,8 +171,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
-    vendor/cm/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
+    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -213,7 +207,8 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    libshim_camera
+    libshim_camera \
+    Snap
 
 # Sensors
 PRODUCT_PACKAGES += \
@@ -236,8 +231,7 @@ PRODUCT_PACKAGES += \
     p2p_supplicant_overlay.conf \
     hostapd_default.conf \
     hostapd.accept \
-    hostapd.deny \
-    iwpriv
+    hostapd.deny
 
 # WCNSS
 PRODUCT_COPY_FILES += \

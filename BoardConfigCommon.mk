@@ -18,11 +18,11 @@ LOCAL_PATH := device/lge/msm8937-common
 
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
-#FORCE_64_BIT := false
+FORCE_64_BIT := true
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8937
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno308
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno505
 
 # Architecture
 ifeq ($(FORCE_64_BIT),true)
@@ -30,7 +30,7 @@ TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
-TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT := cortex-a53
 
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv7-a-neon
@@ -64,16 +64,15 @@ ifeq ($(FORCE_64_BIT),true)
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9-linaro/bin
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 else
 TARGET_KERNEL_ARCH := arm
 BOARD_KERNEL_IMAGE_NAME := zImage-dtb
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-linaro-4.8/bin
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-eabi-4.8/bin
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 endif
 TARGET_KERNEL_APPEND_DTB := true
-TARGET_KERNEL_CONFIG := lineage_lv517_defconfig
 TARGET_KERNEL_SOURCE := kernel/lge/lv517
 
 # Audio
@@ -129,7 +128,6 @@ USE_CUSTOM_AUDIO_POLICY := 1
 USE_XML_AUDIO_POLICY_CONF := 1
 
 # Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 BLUETOOTH_HCI_USE_MCT := true
@@ -149,14 +147,19 @@ BOARD_CHARGING_CMDLINE_VALUE := "chargerlogo"
 
 # CMHW
 BOARD_USES_CYANOGEN_HARDWARE := true
-#BOARD_HARDWARE_CLASS := device/lge/lv517/cmhw/
+#BOARD_HARDWARE_CLASS := device/lge/ph2n/cmhw/
 
 # CNE
 BOARD_USES_QCNE := true
 
 # Dex pre-opt to speed up initial boot
-WITH_DEXPREOPT := true
-DONT_DEXPREOPT_PREBUILTS := true
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    ifeq ($(WITH_DEXPREOPT),)
+      WITH_DEXPREOPT := true
+    endif
+  endif
+endif
 WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 # Display
@@ -210,6 +213,9 @@ TARGET_RIL_VARIANT := caf
 # Sensors
 USE_SENSOR_MULTI_HAL := true
 
+# System prop
+TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
+
 # Keymaster
 TARGET_PROVIDES_KEYMASTER := true
 
@@ -219,6 +225,7 @@ BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
 
 # Tap to wake
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/input/lge_touch/lpwg_notify"
+
 
 # Wifi
 BOARD_HAS_QCOM_WLAN := true

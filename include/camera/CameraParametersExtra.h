@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Lineage Project
+ * Copyright (C) 2016 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-#ifndef _BDROID_BUILDCFG_H
-#define _BDROID_BUILDCFG_H
+#define CAMERA_PARAMETERS_EXTRA_C \
+const char CameraParameters::KEY_NIGHTSHOT_ENABLE[] = "nightshot-enable"; \
+const char CameraParameters::KEY_NIGHTSHOT_ISENABLED[] = "nightshot-isenabled"; \
+const char CameraParameters::KEY_NIGHTHAWK_ENABLE[] = "nighthawk-enable"; \
+\
 
-//#define BLUETOOTH_QTI_SW TRUE
-
-#define BTM_DEF_LOCAL_NAME "Lg Stylo 2 Plus"
-
-#define MAX_ACL_CONNECTIONS   16
-#define MAX_L2CAP_CHANNELS 16
-#define BLE_VND_INCLUDED   TRUE
-#define BTM_LE_SECURE_CONN  TRUE
-#define BT_CLEAN_TURN_ON_DISABLED 1
-//#define BTA_DISABLE_DELAY 1000 /* in milliseconds */
-//#define BTM_WBS_INCLUDED TRUE
-//#define BTIF_HF_WBS_PREFERRED TRUE
-#endif
+#define CAMERA_PARAMETERS_EXTRA_H \
+static const char KEY_NIGHTSHOT_ENABLE[]; \
+static const char KEY_NIGHTSHOT_ISENABLED[]; \
+static const char KEY_NIGHTHAWK_ENABLE[]; \
+\

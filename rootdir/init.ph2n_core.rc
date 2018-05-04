@@ -25,7 +25,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-import /init.lv517_product.rc
+import /init.ph2n_product.rc
 
 # modem logging  (LGODM)
 import /init.lge.modem_log.rc
@@ -42,9 +42,8 @@ service reader_mode /system/bin/sh /init.lge.display.reader_mode.sh
 	oneshot
 
 on early-fs
-# change mode Fingerprint Test app
-	chmod 666 /dev/goodix_fp
-    
+    chmod 666 /dev/goodix_fp
+
 on boot
 
 # Display START
@@ -85,10 +84,6 @@ chmod 0664 /sys/class/graphics/fb0/idle_time
     chmod 664 /sys/devices/virtual/input/lge_touch/touch_wake_up_test
     chown system system /sys/devices/virtual/input/lge_touch/quick_cover_status
     chmod 664 /sys/devices/virtual/input/lge_touch/quick_cover_status
-    chown system system /sys/devices/virtual/input/lge_touch/use_quick_window
-    chmod 664 /sys/devices/virtual/input/lge_touch/use_quick_window
-	chown system system /sys/devices/virtual/input/lge_touch/qmemo_status
-	chmod 664 /sys/devices/virtual/input/lge_touch/qmemo_status
 
 # END TOUCH Commonon
 
@@ -107,7 +102,7 @@ chmod 0664 /sys/class/leds/red/time_on_off
 
 on post-fs
 # enable exfat feature
-# insmod /system/lib/modules/texfat.ko
+insmod /system/lib/modules/texfat.ko
 
 #SDCard Encrypt.
 
@@ -117,11 +112,3 @@ chmod 0664 /sys/kernel/debug/camera/logsync
 on init
     setprop ro.ssbd.session /dev/block/bootdevice/by-name/eksst
     setprop ro.ssbd.offset 0
-
-# Touch_BSP, add lockscreen property
-on property:service.keyguard.status=0
-    write /sys/devices/virtual/input/lge_touch/keyguard 0
-on property:service.keyguard.status=1
-    write /sys/devices/virtual/input/lge_touch/keyguard 1
-on property:service.keyguard.status=2
-    write /sys/devices/virtual/input/lge_touch/keyguard 1
