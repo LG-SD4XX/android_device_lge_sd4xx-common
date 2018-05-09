@@ -94,8 +94,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/data/netmgr_config.xml:system/etc/data/netmgr_config.xml
 
 # Gesture handler
-#PRODUCT_PACKAGES += \
-#    GestureHandler
+PRODUCT_PACKAGES += \
+    GestureHandler
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -203,7 +203,8 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    libshim_camera
+    libshim_camera \
+    Snap
 
 # Sensors
 PRODUCT_PACKAGES += \
