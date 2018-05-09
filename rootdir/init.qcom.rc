@@ -29,9 +29,8 @@
 import init.target.rc
 import init.qcom.usb.rc
 import init.ph2n_core.rc
-import init.qcom.power.rc
 import init.lge.fm.rc
-import /init.lge.bt.rc
+import init.lge.bt.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -581,6 +580,7 @@ service rfs_access /system/bin/rfs_access
 service tftp_server /system/bin/tftp_server
    class core
    user root
+   writepid /dev/cpuset/system-background/tasks
 
 on property:wc_transport.start_hci=true
     start start_hci_filter
@@ -695,20 +695,19 @@ service qmuxd /system/bin/qmuxd
 
 service netmgrd /system/bin/netmgrd
     class main
-    disabled
+    user root
+    group root wifi wakelock radio inet
 
 service ipacm-diag /system/bin/ipacm-diag
     class main
     user system
     socket ipacm_log_file dgram 660 system net_admin
     group net_admin qcom_diag
-    disabled
 
 service ipacm /system/bin/ipacm
     class main
     user net_admin
     group net_admin inet
-    disabled
 
 service qti /system/vendor/bin/qti
     class main
