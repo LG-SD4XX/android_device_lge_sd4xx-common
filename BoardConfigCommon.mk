@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 
-LOCAL_PATH := device/lge/msm8937-common
+COMMON_PATH := device/lge/sd4xx-common
 
-TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8937
@@ -54,8 +54,7 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_APPEND_DTB := true
-TARGET_KERNEL_CONFIG := lineage_ph2n_mini_defconfig
-TARGET_KERNEL_SOURCE := kernel/lge/msm8937
+TARGET_KERNEL_SOURCE := kernel/lge/sd4xx-common
 
 # Audio
 AUDIO_FEATURE_ENABLED_AAC_ADTS_OFFLOAD := true
@@ -196,14 +195,14 @@ TARGET_RIL_VARIANT := caf
 USE_SENSOR_MULTI_HAL := true
 
 # System prop
-TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
+TARGET_SYSTEM_PROP := $(COMMON_PATH)/system.prop
 
 # Keymaster
 TARGET_PROVIDES_KEYMASTER := true
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
-BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
+BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy
 
 # Tap to wake
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/input/lge_touch/lpwg_notify"
