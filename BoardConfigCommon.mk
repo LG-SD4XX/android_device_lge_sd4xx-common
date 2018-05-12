@@ -42,6 +42,10 @@ TARGET_USES_64_BIT_BINDER := true
 TARGET_BOOTLOADER_BOARD_NAME := msm8937
 TARGET_NO_BOOTLOADER := true
 
+# Init
+TARGET_INIT_VENDOR_LIB := libinit_sd4xx
+TARGET_RECOVERY_DEVICE_MODULES := libinit_sd4xx
+
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 user_debug=30 msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 androidboot.hardware=qcom
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
