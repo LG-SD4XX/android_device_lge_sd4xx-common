@@ -61,9 +61,9 @@ PRODUCT_PACKAGES += \
     audio.r_submix.default \
     audio.usb.default \
     libaudio-resampler \
-    lilgecompostprocbundle \
-    lilgecomvisualizer \
-    lilgecomvoiceprocessing \
+    libqcompostprocbundle \
+    libqcomvisualizer \
+    libqcomvoiceprocessing \
     tinymix
 
 PRODUCT_COPY_FILES += \
