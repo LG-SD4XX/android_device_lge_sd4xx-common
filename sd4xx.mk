@@ -119,7 +119,15 @@ PRODUCT_PACKAGES += \
     libgps.utils \
     libloc_core \
     libloc_eng \
-    libgnsspps 
+    libgnsspps
+
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/gps/flp.conf:system/etc/flp.conf \
+    $(COMMON_PATH)/configs/gps/gps.conf:system/etc/gps.conf \
+    $(COMMON_PATH)/configs/gps/izat.conf:system/etc/izat.conf \
+    $(COMMON_PATH)/configs/gps/lowi.conf:system/etc/lowi.conf \
+    $(COMMON_PATH)/configs/gps/sap.conf:system/etc/sap.conf \
+    $(COMMON_PATH)/configs/gps/xtwifi.conf:system/etc/xtwifi.conf
 
 # IMS
 PRODUCT_PACKAGES += \
