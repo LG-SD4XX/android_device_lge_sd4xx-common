@@ -133,6 +133,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libshims_ims
 
+# Gestures package
+PRODUCT_PACKAGES += \
+    DeviceSettings
+
 # Init
 PRODUCT_PACKAGES += \
     init.baseband.sh \
