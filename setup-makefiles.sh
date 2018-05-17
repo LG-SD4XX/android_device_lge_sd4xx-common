@@ -17,9 +17,7 @@
 
 set -e
 
-# Required!
-DEVICE=sd4xx-common
-VENDOR=lge
+export INITIAL_COPYRIGHT_YEAR=2017
 
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
@@ -34,14 +32,35 @@ if [ ! -f "$HELPER" ]; then
 fi
 . "$HELPER"
 
-# Initialize the helper
-setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
+# Initialize the helper for common
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" "true" "$1"
 
 # Copyright headers and guards
-write_headers
+write_headers "lv517 ph2n sf340n cv1"
 
-# The standard blobs
+# The standard common blobs
 write_makefiles "$MY_DIR"/proprietary-files.txt
 
 # We are done!
 write_footers
+
+if [ ! -z $VARIANT_COPYRIGHT_YEAR ]; then
+    export INITIAL_COPYRIGHT_YEAR=$VARIANT_COPYRIGHT_YEAR
+fi
+
+if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
+    # Reinitialize the helper for device
+    setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT" "false" "$1"
+
+    # Copyright headers and guards
+    write_headers
+
+    # The qualcomm blobs
+    write_makefiles "$MY_DIR"/../$DEVICE/proprietary-files-qc.txt true
+
+    # The standard device blobs
+    write_makefiles "$MY_DIR"/../$DEVICE/proprietary-files.txt
+
+    # We are done!
+    write_footers
+fi
