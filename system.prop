@@ -46,6 +46,7 @@ persist.qfp=false
 
 #system props for time-services
 persist.timed.enable=true
+persist.delta_time.enable=true
 
 # Wi-Fi
 wifi.interface=wlan0
