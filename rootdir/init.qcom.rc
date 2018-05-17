@@ -543,7 +543,6 @@ service imsdatadaemon /system/bin/imsdatadaemon
     user system
     socket ims_datad stream 0660 system radio
     group system wifi radio inet net_raw log diag net_admin
-    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:sys.ims.QMI_DAEMON_STATUS=1
@@ -560,7 +559,6 @@ service imscmservice /system/bin/imscmservice
     class main
     user system
     group radio net_raw diag diag log
-    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:sys.ims.DATA_DAEMON_STATUS=1
@@ -579,7 +577,6 @@ service rfs_access /system/bin/rfs_access
 service tftp_server /system/bin/tftp_server
    class core
    user root
-   writepid /dev/cpuset/system-background/tasks
 
 on property:wc_transport.start_hci=true
     start start_hci_filter
@@ -1253,7 +1250,6 @@ service poweroffhandler /system/bin/poweroffhandler
 # Logcat dump daemon, dumps logs to logdump partition
 service logdumpd /system/bin/logcat -b all -v threadtime -D -w /dev/block/bootdevice/by-name/logdump
     class core
-    writepid /dev/cpuset/system-background/tasks
     seclabel u:r:logdumpd:s0
     disabled
 

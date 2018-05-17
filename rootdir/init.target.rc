@@ -99,7 +99,6 @@ service qseecomd /system/bin/qseecomd
 service perfd /system/vendor/bin/perfd
    class main
    user root
-   writepid /dev/cpuset/system-background/tasks
    disabled
 
 service gamed /system/vendor/bin/gamed
@@ -121,7 +120,6 @@ service time_daemon /system/bin/time_daemon
    class main
    user root
    group root
-   writepid /dev/cpuset/system-background/tasks
 
 service audiod /system/bin/audiod
    class late_start

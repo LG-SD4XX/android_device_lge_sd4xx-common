@@ -145,6 +145,7 @@ PRODUCT_PACKAGES += \
     init.ph2n_core.rc \
     init.qcom.bt.sh \
     init.qcom.early_boot.sh \
+    init.qcom.power.rc \
     init.qcom.rc \
     init.qcom.sensors.sh \
     init.qcom.sh \
