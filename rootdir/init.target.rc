@@ -182,7 +182,6 @@ on charger
     load_all_props
     setprop sys.usb.configfs 0
     setprop persist.sys.usb.config mass_storage
-    start qcom-post-boot
     setprop persist.sys.usb.config mass_storage
 # HVDCP3.0 is not supported in PH2 and L5/LEMON
 #    start hvdcp_opti
