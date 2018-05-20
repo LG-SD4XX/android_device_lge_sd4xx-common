@@ -82,7 +82,7 @@ start_msm_irqbalance_8939()
 {
 	if [ -f /system/bin/msm_irqbalance ]; then
 		case "$platformid" in
-		    "239" | "293" | "294" | "295" | "304" | "313")
+		    "239" | "293" | "294" | "295" | "304" | "313" | "338")
 			start msm_irqbalance;;
 		esac
 	fi
@@ -219,7 +219,7 @@ case "$target" in
                   ;;
         esac
         ;;
-    "msm8994" | "msm8992" | "msmcobalt")
+    "msm8994" | "msm8992" | "msm8998")
         start_msm_irqbalance
         ;;
     "msm8996")
@@ -289,7 +289,7 @@ case "$target" in
              hw_platform=`cat /sys/devices/system/soc/soc0/hw_platform`
         fi
         case "$soc_id" in
-             "293" | "304" )
+             "293" | "304" | "338" | "351" )
                   case "$hw_platform" in
                        "Surf")
                                     setprop qemu.hw.mainkeys 0
@@ -322,36 +322,14 @@ else
 fi
 
 cur_version_info=`cat /firmware/verinfo/ver_info.txt`
-
-build_product=`getprop ro.build.product`
-product_name=`getprop ro.product.name`
-
-if [ "$build_product" = "lv517" ]||[ "$build_product" = "sf317" ] || [ "$build_product" = "lv7" ] || [ "$build_product" = "lv9" ] || [ "$build_product" = "sf340" ] || [ "$build_product" = "tf840" ]; then
-    #no check version
+if [ ! -f /firmware/verinfo/ver_info.txt -o "$prev_version_info" != "$cur_version_info" ]; then
     rm -rf /data/misc/radio/modem_config
     mkdir /data/misc/radio/modem_config
     chmod 770 /data/misc/radio/modem_config
-    if [ "$product_name" = "lv517_trf_us" ]||[ "$product_name" = "sf317_trf_us" ] || [ "$product_name" = "lv7_trf_us" ] || \
-        [ "$product_name" = "lv7_global_ca" ] || [ "$product_name" = "lv9_nao_us" ] || [ "$product_name" = "sf340_global_ca" ] || \
-		[ "$product_name" = "lv9_global_ca" ] || [ "$product_name" = "lv7_trf_us_R" ] || [ "$product_name" = "tf840_global_ca" ]; then
-        `setprop persist.radio.sw_mbn_loaded 0`
-        #`setprop persist.radio.hw_mbn_loaded 0`
-        cp -r /firmware/image/modem_pr/mcfg/configs/* /data/misc/radio/modem_config
-    fi
+    cp -r /firmware/image/modem_pr/mcfg/configs/* /data/misc/radio/modem_config
     chown -hR radio.radio /data/misc/radio/modem_config
     cp /firmware/verinfo/ver_info.txt /data/misc/radio/ver_info.txt
     chown radio.radio /data/misc/radio/ver_info.txt
-else
-    #check version
-    if [ ! -f /firmware/verinfo/ver_info.txt -o "$prev_version_info" != "$cur_version_info" ]; then
-        rm -rf /data/misc/radio/modem_config
-        mkdir /data/misc/radio/modem_config
-        chmod 770 /data/misc/radio/modem_config
-        cp -r /firmware/image/modem_pr/mcfg/configs/* /data/misc/radio/modem_config
-        chown -hR radio.radio /data/misc/radio/modem_config
-        cp /firmware/verinfo/ver_info.txt /data/misc/radio/ver_info.txt
-        chown radio.radio /data/misc/radio/ver_info.txt
-    fi
 fi
 cp /firmware/image/modem_pr/mbn_ota.txt /data/misc/radio/modem_config
 chown radio.radio /data/misc/radio/modem_config/mbn_ota.txt
