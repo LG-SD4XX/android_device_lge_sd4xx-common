@@ -141,8 +141,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.baseband.sh \
     init.class_main.sh \
-    init.lge.fingerprints.rc \
-    init.ph2n_core.rc \
+    init.lge.rc \
     init.qcom.bt.sh \
     init.qcom.early_boot.sh \
     init.qcom.power.rc \

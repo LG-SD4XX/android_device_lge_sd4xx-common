@@ -25,19 +25,15 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# TODO: This MUST be blocked not use in LGE device configuration.
-import init.qcom.power.rc
-import init.target.rc
 import init.qcom.usb.rc
-import init.ph2n_core.rc
-import init.variant.rc
+import init.target.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
 
-# TODO: This MUST be blocked not use in LGE device configuration.
-#on init
+# Removed by LG
+on init
 #    # Set permissions for persist partition
 #    mkdir /persist 0771 system system
 #
@@ -51,15 +47,6 @@ on early-init
     write /sys/fs/cgroup/memory/bg/memory.move_charge_at_immigrate 1
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
-
-on init
-#    export LD_SHIM_LIBS "/system/vendor/lib/libqomx_jpegenc.so|libboringssl-compat.so:/system/lib/libril.so|libril_shim.so"
-    export LD_SHIM_LIBS "/system/vendor/lib/lib-imsvt.so|libshims_ims.so"
-    export LD_SHIM_LIBS "libshim_camera.so:/system/lib/hw/camera.msm8937.so|libshim_camera.so:/system/lib/libfilm_emulation.so|libshim_camera.so"
-
-on fs
-    wait /dev/block/bootdevice
-    mount_all fstab.qcom
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
@@ -137,10 +124,6 @@ on boot
 
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
-    # For setting tcp delayed ack
-    chown system system /proc/sys/net/ipv4/tcp_delack_seg
-    chown system system /proc/sys/net/ipv4/tcp_use_userconfig
-
     #For bridgemgr daemon to inform the USB driver of the correct transport
     chown radio radio /sys/class/android_usb/f_rmnet_smd_sdio/transport
 
@@ -158,14 +141,6 @@ on boot
     setprop net.tcp.buffersize.evdo    4094,87380,524288,4096,16384,262144
 
     setprop net.tcp.2g_init_rwnd 10
-
-# Define TCP delayed ack settings for WiFi & LTE
-    setprop net.tcp.delack.default     1
-    setprop net.tcp.delack.wifi        1
-    setprop net.tcp.delack.lte         8
-    setprop net.tcp.usercfg.default    0
-    setprop net.tcp.usercfg.wifi       0
-    setprop net.tcp.usercfg.lte        1
 
 #   Assign TCP buffer thresholds to be ceiling value of technology maximums
 #   Increased technology maximums should be reflected here.
@@ -225,9 +200,6 @@ on post-fs-data
     mkdir /data/misc/stargate/bg_estimation 0770 system system
     mkdir /data/misc/stargate/calib_test 0770 system system
     mkdir /data/misc/stargate/database 0770 system system
-
-    # Fix permission for telephony
-    chmod 0644 /proc/cmdline
 
     # Create directory for TZ Apps
     mkdir /data/misc/qsee 0770 system system
@@ -349,6 +321,8 @@ on post-fs-data
     #Create PERFD deamon related dirs
     mkdir /data/system/perfd 0770 root system
     chmod 2770 /data/system/perfd
+    rm /data/system/perfd/default_values
+    start perfd
 
     # NFC local data and nfcee xml storage
     mkdir /data/nfc 0770 nfc nfc
@@ -362,6 +336,10 @@ on post-fs-data
     chown radio radio /data/misc/radio/copy_complete
     chmod 0660 /data/misc/radio/copy_complete
 
+    # copy prebuilt qcril.db files always
+    copy /system/vendor/qcril.db /data/misc/radio/qcril_prebuilt.db
+    chown radio radio /data/misc/radio/qcril_prebuilt.db
+    chmod 0660 /data/misc/radio/qcril_prebuilt.db
     # File flags for prebuilt ril db file
     write /data/misc/radio/prebuilt_db_support 1
     chown radio radio /data/misc/radio/prebuilt_db_support
@@ -386,22 +364,12 @@ on post-fs-data
     write /sys/block/dm-0/queue/read_ahead_kb 2048
     write /sys/block/dm-1/queue/read_ahead_kb 2048
 
-# led
-   chown system system /sys/devices/virtual/lg_rgb_led/use_patterns/blink_patterns
-   chmod 0644 /sys/devices/virtual/lg_rgb_led/use_patterns/blink_patterns
-   chown system system /sys/devices/virtual/lg_rgb_led/use_patterns/input_patterns
-   chmod 0644 /sys/devices/virtual/lg_rgb_led/use_patterns/input_patterns
-   chown system system /sys/devices/virtual/lg_rgb_led/use_patterns/onoff_patterns
-   chmod 0644 /sys/devices/virtual/lg_rgb_led/use_patterns/onoff_patterns
-   chown system system /sys/devices/virtual/lg_rgb_led/use_patterns/setting
-   chmod 0644 /sys/devices/virtual/lg_rgb_led/use_patterns/setting
-   write /sys/devices/virtual/lg_rgb_led/use_patterns/setting 1
-
-
-service baseband-sh /system/bin/sh /init.baseband.sh
-    class late_start
-    user root
-    oneshot
+# Removed by LG
+#service nqnfcinfo /system/vendor/bin/nqnfcinfo
+#    class late_start
+#    group nfc
+#    user system
+#    oneshot
 
 service perfd /system/vendor/bin/perfd
    class main
@@ -417,7 +385,7 @@ service iop /system/bin/iop
     disabled
     socket iop seqpacket 0666 root system
 
-# TODO: This MUST be disabled not use 'qcom system daemon' in LGE platform.
+# Removed by LG
 #service qcomsysd /system/bin/qcom-system-daemon
 #    class main
 #    user root
@@ -463,6 +431,8 @@ on property:sys.boot_completed=1
     write /sys/block/dm-1/queue/read_ahead_kb 512
     #WDSP FW boot sysfs node used by STHAL
     chown media audio /sys/kernel/wdsp0/boot
+    #CPE fw_name used by sound trigger HAL
+    chown media audio /sys/kernel/wcd_cpe0/fw_name
 
 on property:persist.radio.atfwd.start=false
     stop atfwd
@@ -477,12 +447,6 @@ on property:persist.debug.trace=1
 
 on property:init.svc.wpa_supplicant=stopped
     stop dhcpcd
-
-on property:bluetooth.sap.status=running
-    start bt-sap
-
-on property:bluetooth.sap.status=stopped
-    stop bt-sap
 
 on property:bluetooth.dun.status=running
     start bt-dun
@@ -499,6 +463,12 @@ on property:bluetooth.startbtsnoop=true
 on property:bluetooth.startbtsnoop=false
     stop btsnoop
 
+on property:bluetooth.startbtlogger=true
+    start bt_logger
+
+on property:bluetooth.startbtlogger=false
+    stop bt_logger
+
 service qcom-c_core-sh /system/bin/sh /init.qcom.class_core.sh
     class core
     user root
@@ -514,6 +484,7 @@ on property:vold.decrypt=trigger_restart_framework
     start config_bt_addr
     start config_bluetooth
     start wcnss-service
+#    start cnss_diag
 
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
@@ -521,63 +492,20 @@ on property:persist.env.fastdorm.enabled=true
 service cnd /system/bin/cnd
     class main
     socket cnd stream 660 root inet
-    writepid /dev/cpuset/system-background/tasks
 
 service dpmd /system/bin/dpmd
     class late_start
     socket dpmd stream 660 root system
     group system readproc
-    writepid /dev/cpuset/system-background/tasks
 
 service irsc_util /system/bin/irsc_util "/etc/sec_config"
     class core
     user root
     oneshot
 
-service imsqmidaemon /system/bin/imsqmidaemon
-    class main
-    user system
-    socket ims_qmid stream 0660 system radio
-    group radio net_raw log diag
-    writepid /dev/cpuset/system-background/tasks
-    disabled
-
-on property:service.qti.ims.enabled=1
-    start imsqmidaemon
-
-service imsdatadaemon /system/bin/imsdatadaemon
-    class main
-    user system
-    socket ims_datad stream 0660 system radio
-    group system wifi radio inet net_raw log diag net_admin
-    writepid /dev/cpuset/system-background/tasks
-    disabled
-
-on property:sys.ims.QMI_DAEMON_STATUS=1
-    start imsdatadaemon
-
-service ims_rtp_daemon /system/bin/ims_rtp_daemon
-    class main
-    user system
-    socket ims_rtpd stream 0660 system radio
-    group radio net_raw diag diag inet log
-    disabled
-
-service imscmservice /system/bin/imscmservice
-    class main
-    user system
-    group radio net_raw diag diag log
-    writepid /dev/cpuset/system-background/tasks
-    disabled
-
-on property:sys.ims.DATA_DAEMON_STATUS=1
-    start ims_rtp_daemon
-    start imscmservice
-
 service rmt_storage /system/bin/rmt_storage
     class core
     user root
-    writepid /dev/cpuset/system-background/tasks
 
 service rfs_access /system/bin/rfs_access
    class core
@@ -587,7 +515,6 @@ service rfs_access /system/bin/rfs_access
 service tftp_server /system/bin/tftp_server
    class core
    user root
-   writepid /dev/cpuset/system-background/tasks
 
 on property:wc_transport.start_hci=true
     start start_hci_filter
@@ -620,7 +547,6 @@ service config_bt_addr /system/bin/btnvtool -O
     group bluetooth radio
     oneshot
 
-# TODO: This MUST be added in LGE platform(It's for Qualcomm solution).
 service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
     class core
     user root
@@ -653,14 +579,14 @@ service bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
     disabled
     oneshot
 
-service bt-sap /system/bin/sapd 15
-    user bluetooth
-    group bluetooth net_bt_admin
-    class late_start
-    disabled
-    oneshot
-
 service btsnoop /system/bin/btsnoop
+   user bluetooth
+   group bluetooth net_bt_admin sdcard_rw sdcard_r media_rw
+   class late_start
+   disabled
+   oneshot
+
+service bt_logger /system/bin/bt_logger
    user bluetooth
    group bluetooth net_bt_admin sdcard_rw sdcard_r media_rw
    class late_start
@@ -704,31 +630,31 @@ service netmgrd /system/bin/netmgrd
     class main
     user root
     group root wifi wakelock radio inet
-    writepid /dev/cpuset/system-background/tasks
+#   disabled
 
 service ipacm-diag /system/bin/ipacm-diag
     class main
     user system
     socket ipacm_log_file dgram 660 system net_admin
     group net_admin qcom_diag
+#   disabled
 
 service ipacm /system/bin/ipacm
     class main
     user net_admin
     group net_admin inet
+#   disabled
 
 service qti /system/vendor/bin/qti
     class main
     user radio
     group radio net_raw qcom_diag usb net_admin
-    writepid /dev/cpuset/system-background/tasks
     disabled
 
 service sensors /system/bin/sensors.qcom
     class core
     user root
     group root
-    writepid /dev/cpuset/system-background/tasks
     disabled
 
 on property:ro.use_data_netmgrd=false
@@ -742,24 +668,6 @@ on property:ro.data.large_tcp_window_size=true
 
 on property:sys.sysctl.tcp_adv_win_scale=*
     write /proc/sys/net/ipv4/tcp_adv_win_scale ${sys.sysctl.tcp_adv_win_scale}
-
-service amp_init /system/bin/amploader -i
-    class late_start
-    user root
-    disabled
-    oneshot
-
-service amp_load /system/bin/amploader -l 7000
-    class late_start
-    user root
-    disabled
-    oneshot
-
-service amp_unload /system/bin/amploader -u
-    class late_start
-    user root
-    disabled
-    oneshot
 
 service p2p_supplicant /system/bin/wpa_supplicant \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
@@ -791,6 +699,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
+# Removed by LG
 #service wigig_supplicant /system/bin/wpa_supplicant \
 #    -iwigig0 -Dnl80211 -c/data/misc/wifi/wigig_supplicant.conf \
 #    -m/data/misc/wifi/wigig_p2p_supplicant.conf \
@@ -842,6 +751,7 @@ service dhcpcd_p2p /system/bin/dhcpcd -ABKLG
     disabled
     oneshot
 
+# Removed by LG
 #service dhcpcd_wigig0 /system/bin/dhcpcd -ABKLG
 #    class late_start
 #    disabled
@@ -862,19 +772,20 @@ service iprenew_p2p /system/bin/dhcpcd -n
     disabled
     oneshot
 
+# Removed by LG
 #service iprenew_wigig0 /system/bin/dhcpcd -n
 #    class late_start
 #    disabled
 #    oneshot
 
-# TODO: This MUST be disabled not use 'ptt socket app' in LGE platform.
+# Removed by LG
 #service ptt_socket_app /system/bin/ptt_socket_app -d
 #    class main
 #    user root
 #    group root
 #    oneshot
 
-# TODO: This MUST be disabled not use 'ptt socket app' in LGE platform.
+# Removed by LG
 #service ptt_ffbm /system/bin/ptt_socket_app -f -d
 #    user root
 #    group root
@@ -889,7 +800,7 @@ service wifi_ftmd /system/bin/wifi_ftmd
     oneshot
 
 on property:wifi.ftmd.load=true
-   insmod /system/lib/modules/wlan.ko con_mode=5
+    insmod /system/lib/modules/pronto/pronto_wlan.ko con_mode=5
 
 service cnss_diag /system/bin/cnss_diag -q -f
     class main
@@ -915,33 +826,12 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service dhcpcd_bnep0 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
-service dhcpcd_bnep1 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
-service dhcpcd_bnep2 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
-service dhcpcd_bnep3 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
-service dhcpcd_bnep4 /system/bin/dhcpcd -BKLG
-    disabled
-    oneshot
-
 service loc_launcher /system/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
     group gps inet qcom_diag wifi
-    writepid /dev/cpuset/system-background/tasks
 
-## TODO: Please DO NOT enable the next line when you merge the CAF
+# Removed by LG
 #service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
 #    class late_start
 #    user system
@@ -975,6 +865,13 @@ service sensor-sh /system/bin/sh /init.qcom.sensors.sh
     user root
     oneshot
 
+# Removed by us
+#service qcom-post-boot /system/bin/sh /system/etc/init.qcom.post_boot.sh
+#    class late_start
+#    user root
+#    disabled
+#    oneshot
+
 service qti-testscripts /system/bin/sh /system/etc/init.qcom.testscripts.sh
     class late_start
     user root
@@ -995,6 +892,7 @@ service wifi-crda /system/bin/sh /system/etc/init.crda.sh
    oneshot
 
 on property:sys.boot_completed=1
+#    start qcom-post-boot
     start qti-testscripts
 
 service atfwd /system/bin/ATFWD-daemon
@@ -1042,6 +940,7 @@ service ril-daemon2 /system/bin/rild -c 2
     user root
     disabled
     group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log net_raw
+#    group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log
 
 service ril-daemon3 /system/bin/rild -c 3
     class main
@@ -1050,6 +949,7 @@ service ril-daemon3 /system/bin/rild -c 3
     user root
     disabled
     group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log net_raw
+#   group radio cache inet misc audio sdcard_r sdcard_rw qcom_diag diag log
 
 service usb_uicc_enable /system/bin/sh /system/etc/init.qcom.uicc.sh
     class late_start
@@ -1085,7 +985,6 @@ service charger /sbin/healthd -c
     class charger
     critical
     seclabel u:r:healthd:s0
-    writepid /dev/cpuset/system-background/tasks
 
 service ssr_diag /system/bin/ssr_diag
     class late_start
@@ -1192,33 +1091,12 @@ service LKCore-rel /system/vendor/bin/LKCore
     user system
     group system log qcom_diag
 
-# Coresight early boot service
-#service cs-early-boot /system/bin/sh /persist/coresight/qdss.agent.sh early-boot /system/etc/init.qcom.debug.sh
-#    class core
-#    user root
-#    oneshot
-
-# Coresight post boot servive
-service cs-post-boot /system/bin/sh /persist/coresight/qdss.agent.sh
-    user root
-    disabled
-    oneshot
-
-on property:sys.boot_completed=1
-    start cs-post-boot
-
-on property:sys.dbg.coresight.enable=1
-    write /persist/coresight/enable 1
-
-on property:sys.dbg.coresight.enable=0
-    write /persist/coresight/enable 0
-
 service qseeproxydaemon /system/vendor/bin/qseeproxydaemon
     class late_start
     user system
     group system
-    writepid /dev/cpuset/system-background/tasks
 
+# Removed by LG
 #service esepmdaemon /system/vendor/bin/esepmdaemon
 #    class core
 #    user system
@@ -1232,29 +1110,6 @@ service seemp_healthd /system/vendor/bin/seemp_healthd
 
 on charger
     setprop persist.sys.usb.config charging
-
-#LGE_CHANGE_S, Advanced MOCA, huny.lee@lge.com
-service moca_service /system/bin/advanced_moca -s
-    class late_start
-    user root
-    group system sdcard_r sdcard_rw radio
-    disabled
-    oneshot
-    socket Full.MOCA.port stream 660 system system
-
-on property:persist.service.moca.enable=1
-   start moca_service
-
-service moca_service_disable /system/bin/advanced_moca -k
-    class late_start
-    user root
-    group system sdcard_r sdcard_rw radio
-    disabled
-    oneshot
-
-on property:persist.service.moca.enable=0
-   start moca_service_disable
-#LGE_CHANGE_E, Advanced MOCA, huny.lee@lge.com
 
 #add poweroffhandler
 service poweroffhandler /system/bin/poweroffhandler
@@ -1275,5 +1130,7 @@ service logdumpd /system/bin/logcat -b all -v threadtime -D -w /dev/block/bootde
 on property:ro.logdumpd.enabled=1
     start logdumpd
 
-on property:vold.decrypt=trigger_restart_min_framework
-    start time_daemon
+service time_daemon /system/bin/time_daemon
+    class main
+    user root
+    group root
