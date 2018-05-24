@@ -200,6 +200,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     power.msm8937
 
+# Perf
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/msm_irqbalance.conf:system/vendor/etc/msm_irqbalance.conf
+
 # Qualcomm dependencies
 PRODUCT_PACKAGES += \
     libtinyxml
