@@ -1,3 +1,6 @@
+# Blur
+vendor/lib64/libuiblur.so
+
 # GPS
 bin/loc_launcher
 bin/lowi-server
