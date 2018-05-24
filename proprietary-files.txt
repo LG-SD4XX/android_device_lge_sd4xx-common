@@ -1,6 +1,66 @@
 # Blur
 vendor/lib64/libuiblur.so
 
+# CNE
+-priv-app/CNEService/CNEService.apk
+bin/cnd
+etc/cne/andsfCne.xml
+etc/cne/SwimConfig.xml
+etc/cne/wqeclient/ATT/ATT_profile1.xml
+etc/cne/wqeclient/ATT/ATT_profile2.xml
+etc/cne/wqeclient/ATT/ATT_profile3.xml
+etc/cne/wqeclient/ATT/ATT_profile4.xml
+etc/cne/wqeclient/ROW/ROW_profile1.xml
+etc/cne/wqeclient/ROW/ROW_profile2.xml
+etc/cne/wqeclient/ROW/ROW_profile3.xml
+etc/cne/wqeclient/ROW/ROW_profile4.xml
+etc/cne/wqeclient/ROW/ROW_profile5.xml
+etc/cne/wqeclient/VZW/VZW_profile1.xml
+etc/cne/wqeclient/VZW/VZW_profile2.xml
+etc/cne/wqeclient/VZW/VZW_profile3.xml
+etc/cne/wqeclient/VZW/VZW_profile4.xml
+etc/cne/wqeclient/VZW/VZW_profile5.xml
+etc/cne/wqeclient/VZW/VZW_profile6.xml
+etc/permissions/cneapiclient.xml
+etc/permissions/com.quicinc.cne.xml
+etc/permissions/ConnectivityExt.xml
+framework/cneapiclient.jar
+framework/com.quicinc.cne.jar
+framework/ConnectivityExt.jar
+vendor/lib/libcne.so
+vendor/lib/libcneapiclient.so
+vendor/lib/libcneqmiutils.so
+vendor/lib/libvendorconn.so
+vendor/lib/libwqe.so
+vendor/lib/libxml.so
+vendor/lib64/libcne.so
+vendor/lib64/libcneapiclient.so
+vendor/lib64/libcneqmiutils.so
+vendor/lib64/libvendorconn.so
+vendor/lib64/libwqe.so
+vendor/lib64/libxml.so
+
+# DPM
+-priv-app/dpmserviceapp/dpmserviceapp.apk
+bin/dpmd
+etc/dpm/dpm.conf
+etc/dpm/nsrm/NsrmConfiguration.xml
+etc/permissions/com.qti.dpmframework.xml
+etc/permissions/dpmapi.xml
+framework/com.qti.dpmframework.jar
+framework/dpmapi.jar
+framework/tcmclient.jar
+vendor/lib/libdpmctmgr.so
+vendor/lib/libdpmfdmgr.so
+vendor/lib/libdpmframework.so
+vendor/lib/libdpmnsrm.so
+vendor/lib/libdpmtcm.so
+vendor/lib64/libdpmctmgr.so
+vendor/lib64/libdpmfdmgr.so
+vendor/lib64/libdpmframework.so
+vendor/lib64/libdpmnsrm.so
+vendor/lib64/libdpmtcm.so
+
 # GPS
 bin/loc_launcher
 bin/lowi-server
@@ -166,6 +226,18 @@ etc/firmware/a530_gpmu.fw2
 etc/firmware/a530_pfp.fw
 etc/firmware/a530_pm4.fw
 etc/firmware/a540_gpmu.fw2
+
+# Modem
+vendor/lib/libwms.so
+vendor/lib64/libwms.so
+
+# Network
+-priv-app/QtiTetherService/QtiTetherService.apk
+vendor/lib/libconnctrl.so
+vendor/lib/libcsm_data.so
+vendor/lib/libQtiTether.so
+vendor/lib64/libconnctrl.so
+vendor/lib64/libQtiTether.so
 
 # QMI - from garlic (YUREKA BLACK)
 bin/ATFWD-daemon
