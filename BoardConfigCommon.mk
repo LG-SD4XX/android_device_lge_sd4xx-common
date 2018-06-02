@@ -217,7 +217,5 @@ WIFI_DRIVER_FW_PATH_AP := "ap"
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
--include device/lge/common/BoardConfigCommon.mk
-
 # inherit from the proprietary version
 -include vendor/lge/sd4xx-common/BoardConfigVendor.mk
