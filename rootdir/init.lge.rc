@@ -125,7 +125,7 @@ service bt-sap /system/bin/sapd 15
    oneshot
 
 # fingerprintd
-service fingerprintd /system/bin/fingerprintd
+service fingerprintd /system/vendor/bin/fingerprintd
     class late_start
     user system
     group system input

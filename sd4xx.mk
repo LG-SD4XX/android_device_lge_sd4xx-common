@@ -53,22 +53,32 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
+ # Audio
+ PRODUCT_COPY_FILES += \
+     $(LOCAL_PATH)/audio/audio_platform_info.xml:system/etc/audio_platform_info.xml
+     
 # Audio
 PRODUCT_PACKAGES += \
-    audiod \
     audio.a2dp.default \
-    audio.primary.msm8937 \
+    audio.primary.$(TARGET_BOARD_PLATFORM) \
+    audiod \
     audio.r_submix.default \
     audio.usb.default \
     libaudio-resampler \
-    libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
+    libqcompostprocbundle \
     tinymix
 
+PRODUCT_PACKAGES += \
+    android.hardware.audio@2.0-impl \
+    android.hardware.audio@2.0-service \
+    android.hardware.audio.effect@2.0-impl \
+    android.hardware.audio.effect@2.0-service \
+    android.hardware.soundtrigger@2.0-impl \
+    android.hardware.soundtrigger@2.0-service
+
 PRODUCT_COPY_FILES += \
-    hardware/qcom/audio-caf/msm8996/configs/msm8937/audio_platform_info.xml:system/etc/audio_platform_info.xml \
-	hardware/qcom/audio-caf/msm8996/configs/msm8937/audio_platform_info_extcodec.xml:system/etc/audio_platform_info_extcodec.xml \
     $(COMMON_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
     $(COMMON_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml \
     $(COMMON_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml
@@ -88,7 +98,8 @@ PRODUCT_PACKAGES += \
     gralloc.msm8937 \
     hwcomposer.msm8937 \
     memtrack.msm8937 \
-    liboverlay
+    liboverlay \
+    libqdMetaData
 
 # Data
 PRODUCT_COPY_FILES += \
@@ -117,9 +128,16 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     gps.msm8937 \
     libgps.utils \
+    libcurl \
+    libgnss \
     libloc_core \
     libloc_eng \
     libgnsspps
+
+PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl \
+    android.hardware.gnss@1.0-impl-qti \
+    android.hardware.gnss@1.0-service-qti
 
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/gps/etc/flp.conf:system/etc/flp.conf \

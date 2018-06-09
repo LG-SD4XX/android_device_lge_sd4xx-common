@@ -75,7 +75,7 @@ on post-fs-data
     mkdir /data/misc/hbtp 0750 system system
 
 #start camera server as daemon
-service qcamerasvr /system/bin/mm-qcamera-daemon
+service qcamerasvr /system/vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
@@ -111,7 +111,7 @@ service qrngp /system/bin/qrngp -f
 on property:sys.boot_completed=1
    start qrngp
 
-service qseecomd /system/bin/qseecomd
+service qseecomd /system/vendor/bin/qseecomd
    class core
    user root
    group root
@@ -190,7 +190,7 @@ on property:init.svc.zygote=running
 on property:init.svc.zygote=restarting
     stop ppd
 
-service wcnss-service /system/bin/wcnss_service
+service wcnss-service /system/vendor/bin/wcnss_service
     class main
     user system
     group system wifi radio
@@ -259,7 +259,7 @@ service dtseagleservice /system/bin/dts_eagle_service
     group audio media
     disabled
 
-service adsprpcd /system/bin/adsprpcd
+service adsprpcd /system/vendor/bin/adsprpcd
     class main
     user media
     group media
@@ -267,12 +267,12 @@ service adsprpcd /system/bin/adsprpcd
 on property:init.svc.dts_configurator=stopped
     start dtseagleservice
 
-service per_mgr /system/bin/pm-service
+service per_mgr /system/vendor/bin/pm-service
     class core
     user system
     group system net_raw
 
-service per_proxy /system/bin/pm-proxy
+service per_proxy /system/vendor/bin/pm-proxy
     class core
     user system
     group system

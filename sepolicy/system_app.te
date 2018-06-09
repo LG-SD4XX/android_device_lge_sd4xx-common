@@ -1,1 +1,2 @@
-allow system_app sysfs_gesture:file rw_file_perms;
+# Allow binder calls to fingerprintd
+binder_call(system_app, fingerprintd)

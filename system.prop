@@ -25,6 +25,7 @@ persist.radio.sib16_support=1
 
 # display
 ro.opengles.version=196610
+persist.debug.wfd.enable=1
 
 # Netmgrd
 ro.use_data_netmgrd=true

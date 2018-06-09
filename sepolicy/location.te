@@ -1,2 +1,2 @@
-allow location permission_service:service_manager find;
-allow location self:capability net_raw;
+allow location sysfs_wake_lock:file { write open };
+allow location diag_device:chr_file { read write };
