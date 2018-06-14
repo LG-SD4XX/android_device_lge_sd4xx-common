@@ -108,6 +108,8 @@ PRODUCT_PACKAGES += \
     copybit.msm8937 \
     gralloc.msm8937 \
     hwcomposer.msm8937 \
+    libdisplayconfig \
+    libqdMetaData.system \
     memtrack.msm8937 \
     liboverlay
 
