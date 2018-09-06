@@ -31,7 +31,7 @@ import init.qcom.power.rc
 import init.variant.rc
 
 on init
-    export LD_SHIM_LIBS "/system/vendor/lib/lib-imsvt.so|libshims_ims.so"
+    # export LD_SHIM_LIBS "/system/vendor/lib/lib-imsvt.so|libshims_ims.so"
     export LD_SHIM_LIBS "libshim_camera.so:/system/lib/hw/camera.msm8937.so|libshim_camera.so:/system/lib/libfilm_emulation.so|libshim_camera.so"
 
 on boot
@@ -67,50 +67,9 @@ on boot
     chown system system /sys/devices/virtual/graphics/fb0/reader_mode
     chmod 664 /sys/devices/virtual/graphics/fb0/reader_mode
 
-    chown system system /sys/class/leds/red/pattern_id
-    chmod 0664 /sys/class/leds/red/pattern_id
-    chown system system /sys/class/leds/red/timed
-    chmod 0664 /sys/class/leds/red/timed
-    chown system system /sys/class/leds/red/time_on_off
-    chmod 0664 /sys/class/leds/red/time_on_off
-
-   chown system input /sys/devices/virtual/input/lge_fingerprint/testmode
-   chown system input /sys/devices/virtual/input/lge_fingerprint/spitest
-   chown system input /sys/devices/virtual/input/lge_fingerprint/zonetest
-   chown system input /sys/devices/virtual/input/lge_fingerprint/checkerbdtest
-   chown system input /sys/devices/virtual/input/lge_fingerprint/rubbertest
-   chown system input /sys/devices/virtual/input/lge_fingerprint/intstatus
-   chown system input /sys/devices/virtual/input/lge_fingerprint/qup_id
-   chown system input /sys/devices/virtual/input/lge_fingerprint/waitfinger
-   chown system input /sys/devices/virtual/input/lge_fingerprint/spi_prepare
-
-   chmod 0660 /sys/devices/virtual/input/lge_fingerprint/testmode
-   chmod 0660 /sys/devices/virtual/input/lge_fingerprint/spitest
-   chmod 0660 /sys/devices/virtual/input/lge_fingerprint/zonetest
-   chmod 0660 /sys/devices/virtual/input/lge_fingerprint/checkerbdtest
-   chmod 0660 /sys/devices/virtual/input/lge_fingerprint/rubbertest
-   chmod 0440 /sys/devices/virtual/input/lge_fingerprint/intstatus
-   chmod 0660 /sys/devices/virtual/input/lge_fingerprint/qup_id
-   chmod 0220 /sys/devices/virtual/input/lge_fingerprint/waitfinger
-   chmod 0660 /sys/devices/virtual/input/lge_fingerprint/spi_prepare
-
 on post-fs-data
     # Fix permission for telephony
     chmod 0644 /proc/cmdline
-
-   # make factory test result directory
-   mkdir /sns/fingerprint 0775 system system
-
-   # led
-   chown system system /sys/devices/virtual/lg_rgb_led/use_patterns/blink_patterns
-   chmod 0644 /sys/devices/virtual/lg_rgb_led/use_patterns/blink_patterns
-   chown system system /sys/devices/virtual/lg_rgb_led/use_patterns/input_patterns
-   chmod 0644 /sys/devices/virtual/lg_rgb_led/use_patterns/input_patterns
-   chown system system /sys/devices/virtual/lg_rgb_led/use_patterns/onoff_patterns
-   chmod 0644 /sys/devices/virtual/lg_rgb_led/use_patterns/onoff_patterns
-   chown system system /sys/devices/virtual/lg_rgb_led/use_patterns/setting
-   chmod 0644 /sys/devices/virtual/lg_rgb_led/use_patterns/setting
-   write /sys/devices/virtual/lg_rgb_led/use_patterns/setting 1
 
 service baseband-sh /system/bin/sh /init.baseband.sh
     class late_start
@@ -123,12 +82,6 @@ service bt-sap /system/bin/sapd 15
    class late_start
    disabled
    oneshot
-
-# fingerprintd
-service fingerprintd /system/bin/fingerprintd
-    class late_start
-    user system
-    group system input
 
 # fidod
 service fidod /system/bin/fidod
@@ -195,12 +148,12 @@ service moca_service_disable /system/bin/advanced_moca -k
     disabled
     oneshot
 
-service imsqmidaemon /system/bin/imsqmidaemon
-    class main
-    user system
-    socket ims_qmid stream 0660 system radio
-    group radio net_raw log diag
-    disabled
+## service imsqmidaemon /system/bin/imsqmidaemon
+##   class main
+##    user system
+##   socket ims_qmid stream 0660 system radio
+##    group radio net_raw log diag
+##    disabled
 
 on property:persist.service.moca.enable=1
    start moca_service
@@ -223,8 +176,8 @@ on property:bluetooth.sap.status=running
 on property:bluetooth.sap.status=stopped
     stop bt-sap
 
-on property:service.qti.ims.enabled=1
-    start imsqmidaemon
+##on property:service.qti.ims.enabled=1
+##   start imsqmidaemon
 
 on property:vold.decrypt=trigger_restart_min_framework
     start time_daemon
