@@ -1,5 +1,5 @@
 # ART
-ro.sys.fw.dex2oat_thread_count=4
+ro.sys.fw.dex2oat_thread_count=3
 
 # RIL
 DEVICE_PROVISIONED=1
@@ -35,8 +35,7 @@ persist.data.mode=concurrent
 ro.vendor.extension_library=libqti-perfd-client.so
 
 # dpm
-persist.dpm.feature=0
-#persist.sys.dpmd.nsrm=3
+persist.sys.dpmd.nsrm=3
 
 # cne
 persist.cne.feature=1
@@ -61,51 +60,77 @@ debug.qualcomm.sns.libsensor1=e
 persist.sensors.mag_filter_size=8
 
 # bluetooth
-#ro.bt.bdaddr_path=/data/misc/bdaddr
+ro.bt.bdaddr_path=/system/bin/bdaddr_loader
 qcom.bluetooth.soc=smd
 ro.qualcomm.bt.hci_transport=smd
+bluetooth.hfp.client=1
+
+#property to enable user to access Google WFD settings
+persist.debug.wfd.enable=1
+#propery to enable VDS WFD solution
+persist.hwc.enable_vds=1
+#selects CoreSight configuration to enable
+persist.debug.coresight.config=stm-events
+
+#property for vendor specific library
+ro.vendor.at_library=libqti-at.so
+ro.vendor.gt_library=libqti-gt.so
+#property to enable narrow search range for video encoding
+vidc.enc.narrow.searchrange=1
+wlan.lge.softap5g=true
+wifi.lge.supportp2p5g=full
+wlan.lge.dcf.enable=true
+persist.dpm.feature=7
+wifi.lge.ftm_test=0
+ro.opengles.version=196608
+ro.movetosdcard.enable=true
+persist.sys.strictmode.disable=true
+drm.service.enabled=true
 
 # Audio
-af.fast_track_multiplier=1
-audio_hal.period_size=192
+audio_hal.period_size=240
 audio.deep_buffer.media=true
 audio.dolby.ds2.enabled=true
 #QC property used when calculating client heap size in audio flinger
-#audio.heap.size.multiplier=7
+#audio.heap.size.multiplier=24
 audio.dolby.ds2.hardbypass=true
+use.voice.path.for.pcm.voip=false
+persist.audio.handset_rx_type=DEFAULT
 audio.parser.ip.buffer.size=262144
-audio.playback.mch.downsample=true
 audio.pp.asphere.enabled=false
 audio.safx.pbe.enabled=true
+
+audio.offload.video=false
 flac.sw.decoder.24bit.support=true
 persist.speaker.prot.enable=false
 persist.audio.fluence.speaker=true
 persist.audio.fluence.voicecall=true
 persist.audio.fluence.voicerec=false
-ro.qc.sdk.audio.fluencetype=fluence
+ro.qc.sdk.audio.fluencetype=nxp
 ro.qc.sdk.audio.ssr=false
 tunnel.audio.encode=false
 use.qti.sw.alac.decoder=true
 use.qti.sw.ape.decoder=true
-use.voice.path.for.pcm.voip=true
-voice.conc.fallbackpath=deep-buffer
-voice.playback.conc.disabled=true
+voice.playback.conc.disabled=false
 voice.record.conc.disabled=false
 voice.voip.conc.disabled=true
 ro.config.vc_call_vol_steps=7
 ro.config.vc_call_vol_default=7
 
 # Audio offload
-audio.offload.buffer.size.kb=64
+audio.offload.buffer.size.kb=128
 audio.offload.gapless.enabled=true
 audio.offload.min.duration.secs=30
 audio.offload.multiple.enabled=false
+audio.offload.pcm.enable=true
 audio.offload.pcm.16bit.enable=true
 audio.offload.pcm.24bit.enable=true
 audio.offload.multiaac.enable=true
 audio.offload.passthrough=false
 audio.offload.track.enable=true
-audio.offload.video=true
+audio.offload.video=false
+audio.offload.disable=false
+av.offload.enable=true
 
 # Media
 media.msm8956hw=0
@@ -116,13 +141,103 @@ media.aac_51_output_enabled=true
 persist.mm.sta.enable=0
 qcom.hw.aac.encoder=true
 video.disable.ubwc=1
-vidc.disable.split.mode=1
 vidc.enc.narrow.searchrange=1
+media.stagefright.enable-player=true
+media.stagefright.enable-http=true
+media.stagefright.enable-aac=true
+media.stagefright.enable-qcp=true
+media.stagefright.enable-fna2dp=true
+media.stagefright.enable-scan=true
 
 # swap & zram
 ro.config.zram=true
 ro.config.swap=true
-ro.config.zram.disksize=768M
 
 # Factory Reset Protection (FRP)
 ro.frp.pst=/dev/block/bootdevice/by-name/persistent
+
+# Radio - IMS
+persist.radio.hw_mbn_update=1
+persist.radio.sw_mbn_openmkt=1
+persist.radio.sw_mbn_update=1
+persist.radio.start_ota_daemon=1
+
+# GPS from stock
+log.tag.GpsLocationProvider=DEBUG
+log.tag.LocationManagerService=DEBUG
+log.tag.NlpProxy=DEBUG
+log.tag.LocSvc_java=DEBUG
+log.tag.LgeGpsIndicator=DEBUG
+log.tag.GeofenceHardwareImpl=DEBUG
+log.tag.GeofenceManager=DEBUG
+log.tag.FlpServiceProvider=DEBUG
+log.tag.GeofenceProxy=DEBUG
+
+debug.sf.hw=1
+persist.hwc.mdpcomp.enable=true
+ro.sf.compbypass.enable=0
+ro.qualcomm.cabl=2
+debug.gr.numframebuffers=3
+hwui.enable_vsync=true
+com.qc.hardware=true
+com.qc.hdmi_out=false
+pm.sleep_mode=1
+video.accelerate.hw=1
+debug.performance.tuning=1
+hwui.use_gpu_pixel_buffers=true
+hwui.use.blacklist=true
+ro.ril.transmitpower=true
+ro.media.dec.jpeg.memcap=20000000
+ro.kernel.android.checkjni=0
+dalvik.vm.dexopt-flags=v=a,o=v,m=y,u=y
+ro.config.nocheckin=1
+persist.sys.purgable_assets=1
+ril.disable.power.collapse=1
+windowsmgr.max_events_per_sec=90
+debug.enable.sglscale=1
+net.tether.noprovisioning=true
+persist.service.lgospd.enable=0
+persist.service.pcsync.enable=0
+media.stagefright.enable-meta=true
+media.stagefright.enable-rtsp=true
+persist.sys.NV.FPSLIMIT=60
+persist.sys.NV.POWERMODE=1
+persist.sys.NV_PROFVER=15
+ro.config.hw_quickpoweron=true
+debug.qc.hardware=true
+ro.config.disable.hw_accel=false
+ro.fb.mode=1
+ro.void.umsdirtyratio=20
+persist.sys.composition.type=mdp
+ro.product.gpu.driver=1
+persist.sys.use_16bpp_alpha=1
+power.saving.mode=1
+ro.secure=0
+ro.media.enc.hprof.vid.bps=8000000
+ro.media.enc.hprof.vid.fps=65
+ro.media.capture.maxres=13
+ro.media.capture.fast.fps=4
+ro.camcorder.videoModes=true
+ro.lge.proximity.delay=25
+ro.max.fling_velocity=15000
+ro.min.fling_velocity=7000
+ro.config.hw_power_saving=true
+persist.cust.tel.eons=1
+persist.android.strictmode=0
+persist.sys.scrollingcache=3
+media.stagefright.enable-record=1
+
+persist.service.odm_log.noti=true
+persist.service.odm_log.svc=true
+persist.debug.sensors.hal=i
+debug.qualcomm.sns.daemon=i
+debug.qualcomm.sns.libsensor1=e
+persist.sensors.pocket_delay=1000
+persist.sensors.knock_delay=1000
+ro.telephony.emgss=true
+tangible_device_config=B1BCNAOTNA
+wlan.chip.vendor=qcom
+wlan.chip.version=wcn
+
+persist.sys.dalvik.vm.lib.2=libart.so
+ro.mdtp.package_name2=com.qualcomm.qti.securemsm.mdtp.MdtpDemo

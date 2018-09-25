@@ -31,6 +31,8 @@ import init.target.rc
 on early-init
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
+    mount debugfs debugfs /sys/fs/pstore
+    chmod 0755 /sys/fs/pstore
 
 # Removed by LG
 on init
@@ -47,6 +49,11 @@ on init
     write /sys/fs/cgroup/memory/bg/memory.move_charge_at_immigrate 1
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
+    
+    # ZRAM
+    write /sys/block/zram0/comp_algorithm "lz4HC"
+    write /proc/sys/vm/page-cluster 0
+    write /proc/sys/vm/swappiness 70
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
@@ -276,6 +283,8 @@ on post-fs-data
     #Create directories for Location services
     mkdir /data/misc/location 0770 gps gps
     mkdir /data/misc/location/mq 0770 gps gps
+    mkdir /data/misc/location/flp 0770 gps system
+    mkdir /data/misc/location/izat 0770 gps system
     mkdir /data/misc/location/xtwifi 0770 gps gps
     mkdir /data/misc/location/gpsone_d 0770 system gps
     mkdir /data/misc/location/quipc 0770 gps system
@@ -323,10 +332,6 @@ on post-fs-data
     chmod 2770 /data/system/perfd
     rm /data/system/perfd/default_values
     start perfd
-
-    # NFC local data and nfcee xml storage
-    mkdir /data/nfc 0770 nfc nfc
-    mkdir /data/nfc/param 0770 nfc nfc
 
     #Create IOP  deamon related dirs
     mkdir /data/misc/iop 0770 root system
@@ -535,13 +540,13 @@ service start_hci_filter /system/bin/wcnss_filter
     disabled
 
 #net_admin capability needed to write rfkill sysfs entry
-service fmhal_service /system/bin/fmhal_service
+service fm_qsoc_patches /system/bin/fm_qsoc_patches
     class late_start
     user bluetooth
     group bluetooth net_bt_admin net_admin
     disabled
 
-service config_bt_addr /system/bin/btnvtool -O
+service config_bt_addr /system/bin/bdaddr_loader -O
     class core
     user bluetooth
     group bluetooth radio
@@ -617,14 +622,14 @@ service qmiproxy /system/bin/qmiproxy
     class main
     user radio
     group radio qcom_diag
-    disabled
+#    disabled
 
 # QMUX must be in multiple groups to support external process connections
 service qmuxd /system/bin/qmuxd
     class main
     user root
-    group radio audio bluetooth gps nfc qcom_diag
-    disabled
+    group radio audio bluetooth wifi gps qcom_diag
+#    disabled
 
 service netmgrd /system/bin/netmgrd
     class main
@@ -649,7 +654,7 @@ service qti /system/vendor/bin/qti
     class main
     user radio
     group radio net_raw qcom_diag usb net_admin
-    disabled
+#    disabled
 
 service sensors /system/bin/sensors.qcom
     class core
@@ -829,6 +834,7 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
 service loc_launcher /system/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
+    user system
     group gps inet qcom_diag wifi
 
 # Removed by LG
@@ -918,15 +924,12 @@ on property:persist.data.ds_fmc_app.mode=1
 
 service ims_regmanager /system/bin/exe-ims-regmanagerprocessnative
     class late_start
-    group net_bt_admin inet radio wifi
-    disabled
+    user root
+    group net_bt_admin inet radio wifi root
+#    disabled
 
 on property:persist.ims.regmanager.mode=1
     start ims_regmanager
-
-on property:ro.data.large_tcp_window_size=true
-    # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
-    write /proc/sys/net/ipv4/tcp_adv_win_scale  2
 
 service battery_monitor /system/bin/battery_monitor
     user system

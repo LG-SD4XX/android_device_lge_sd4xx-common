@@ -38,7 +38,7 @@ on early-init
 on fs
     wait /dev/block/bootdevice
     mount_all fstab.qcom
-    write /proc/sys/vm/swappiness 100
+    write /proc/sys/vm/swappiness 50
 
     # Keeping following partitions outside fstab file. As user may not have
     # these partition flashed on the device. Failure to mount any partition in fstab file
@@ -208,38 +208,11 @@ on charger
 # Disabled by LG
 #    start hvdcp_opti
 
-service imsdatadaemon /system/bin/imsdatadaemon
-    class main
-    user system
-    socket ims_datad stream 0660 system radio
-    group system wifi radio inet net_raw log diag net_admin
-    disabled
-
 # Disabled by LG
 #service hvdcp_opti /system/bin/hvdcp_opti
 #    class main
 #    user root
 #    group root
-
-on property:sys.ims.QMI_DAEMON_STATUS=1
-    start imsdatadaemon
-
-service ims_rtp_daemon /system/bin/ims_rtp_daemon
-   class main
-   user system
-   socket ims_rtpd stream 0660 system radio
-   group radio net_raw diag diag inet log
-   disabled
-
-service imscmservice /system/bin/imscmservice
-   class main
-   user system
-   group radio net_raw diag diag log
-   disabled
-
-on property:sys.ims.DATA_DAEMON_STATUS=1
-    start ims_rtp_daemon
-    start imscmservice
 
 service hbtp /system/vendor/bin/hbtp_daemon
     class main

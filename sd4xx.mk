@@ -51,8 +51,14 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
-
+    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:system/etc/permissions/android.hardware.vulkan.level-0.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:system/etc/permissions/android.hardware.vulkan.version-1_0_3.xml \
+    
+# Additional native libraries
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
+    
 # Audio
 PRODUCT_PACKAGES += \
     audiod \
@@ -72,6 +78,10 @@ PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
     $(COMMON_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml \
     $(COMMON_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml
+    
+# Audio configuration
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
 #XML Audio configuration files
 PRODUCT_COPY_FILES += \
@@ -82,13 +92,22 @@ PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:/system/etc/r_submix_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:/system/etc/usb_audio_policy_configuration.xml
 
+PRODUCT_PROPERTY_OVERRIDES += \
+camera2.portability.force_api=1
+    
+# Camera config for HAL1 hacks		
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+     media.stagefright.legacyencoder=true \
+     media.stagefright.less-secure=true
+
 # Display
 PRODUCT_PACKAGES += \
     copybit.msm8937 \
     gralloc.msm8937 \
     hwcomposer.msm8937 \
     memtrack.msm8937 \
-    liboverlay
+    liboverlay \
+    libI420colorconvert
 
 # Data
 PRODUCT_COPY_FILES += \
@@ -115,11 +134,14 @@ PRODUCT_PACKAGES += \
 
 # Gps
 PRODUCT_PACKAGES += \
-    gps.msm8937
+    gps.msm8937 \
+    gps.default \
+    libcurl \
+    libgnsspps
 
-# IMS
+# Ion
 PRODUCT_PACKAGES += \
-    libshims_ims
+    libion
 
 # Gestures package
 PRODUCT_PACKAGES += \
@@ -191,6 +213,11 @@ PRODUCT_PACKAGES += \
 # Perf
 PRODUCT_COPY_FILES += \
     $(COMMON_PATH)/configs/msm_irqbalance.conf:system/vendor/etc/msm_irqbalance.conf
+    
+# QC Perf
+ PRODUCT_PROPERTY_OVERRIDES += \
+     ro.qualcomm.perf.cores_online=2 \
+     ro.vendor.extension_library=libqti-perfd-client.so
 
 # Qualcomm dependencies
 PRODUCT_PACKAGES += \
@@ -216,10 +243,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     sensors.msm8937
 
+# Vibrator
+PRODUCT_PACKAGES += \
+    vibrator.default \
+    
 # Vulkan
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:system/etc/permissions/android.hardware.vulkan.level-0.xml \
-    frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:system/etc/permissions/android.hardware.vulkan.version-1_0_3.xml
+    frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
 
 # Wifi
 PRODUCT_PACKAGES += \
