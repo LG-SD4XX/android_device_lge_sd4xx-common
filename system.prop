@@ -123,7 +123,6 @@ vidc.enc.narrow.searchrange=1
 # swap & zram
 ro.config.zram=true
 ro.config.swap=true
-ro.config.zram.disksize=768M
 
 # Factory Reset Protection (FRP)
 ro.frp.pst=/dev/block/bootdevice/by-name/persistent
