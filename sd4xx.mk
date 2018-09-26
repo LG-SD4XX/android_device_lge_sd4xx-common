@@ -123,6 +123,10 @@ PRODUCT_PACKAGES += \
     libcurl \
     libgnsspps
 
+# Ion
+PRODUCT_PACKAGES += \
+    libion
+
 # IMS
 PRODUCT_PACKAGES += \
     libshims_ims
