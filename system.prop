@@ -32,6 +32,7 @@ persist.data.netmgrd.qos.enable=true
 persist.data.mode=concurrent
 
 # perfd
+ro.qualcomm.perf.cores_online=2
 ro.vendor.extension_library=libqti-perfd-client.so
 
 # dpm
