@@ -75,7 +75,8 @@ PRODUCT_COPY_FILES += \
 	hardware/qcom/audio-caf/msm8996/configs/msm8937/audio_platform_info_extcodec.xml:system/etc/audio_platform_info_extcodec.xml \
     $(COMMON_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
     $(COMMON_PATH)/audio/sound_trigger_platform_info.xml:system/etc/sound_trigger_platform_info.xml \
-    $(COMMON_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml
+    $(COMMON_PATH)/audio/sound_trigger_mixer_paths.xml:system/etc/sound_trigger_mixer_paths.xml \
+    $(COMMON_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
 #XML Audio configuration files
 PRODUCT_COPY_FILES += \
